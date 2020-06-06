@@ -24,7 +24,7 @@ export default class MyMessageForm extends Component {
      */
     validation() {
         const errorList = [];//エラーメッセージのリスト
-        
+
         //送信するメッセージは、空文字列か？
         if (!this.state.message) {
             errorList.push('メッセージがありません。')
@@ -53,7 +53,15 @@ export default class MyMessageForm extends Component {
         //バリデーションの検証
         if (this.validation()) return;
 
-        fetch(_URL, { text: this.state.message })
+        //リクエストするデータ
+        const data = new URLSearchParams();
+        data.set('text', this.state.message);
+
+        fetch(_URL + 'talkText' + data.toString,
+            {
+                method: 'GET',
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+            })
             .then((res) => {
                 console.log(res);
             })
