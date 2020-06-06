@@ -6,7 +6,15 @@ export default class MyMessageForm extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            message: '',
+        }
     }
+
+    doGetNobyAPI() {
+    }
+
 
     render() {
         const marginStyle = {
