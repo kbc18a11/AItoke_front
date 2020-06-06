@@ -7,8 +7,8 @@ export default class Wada extends Component {
     render() {
         return (
             <div>
-                <MyMessageForm/>
                 <Button variant="primary">Primary</Button>
+                <MyMessageForm/>
             </div>
         )
     }
