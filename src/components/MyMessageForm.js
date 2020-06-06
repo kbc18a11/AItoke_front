@@ -48,7 +48,10 @@ export default class MyMessageForm extends Component {
     doChange_message(e) {
         this.setState({ message: e.target.value });
     }
-
+    /**
+     * APIとの通信
+     * @param {*} e 
+     */
     doGetNobyAPI(e) {
         //バリデーションの検証
         if (this.validation()) return;
