@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { _URL } from '../apiURL/AITalk_outApiCall_and_Auth';
-
+import axios from 'axios';
 export default class MyMessageForm extends Component {
 
     constructor(props) {
@@ -48,6 +48,7 @@ export default class MyMessageForm extends Component {
     doChange_message(e) {
         this.setState({ message: e.target.value });
     }
+
     /**
      * APIとの通信
      * @param {*} e 
@@ -56,21 +57,16 @@ export default class MyMessageForm extends Component {
         //バリデーションの検証
         if (this.validation()) return;
 
-        //リクエストするデータ
-        const data = new URLSearchParams();
-        data.set('text', this.state.message);
-
-        fetch(_URL + 'talkText' + data.toString,
-            {
-                method: 'GET',
-                headers: { "Content-Type": "application/json; charset=utf-8" },
-            })
+        //APIとの通信開始
+        axios.get(_URL + '/talkText?text=' + this.state.message)
             .then((res) => {
                 console.log(res);
             })
             .catch((error) => {
                 console.log(error);
-            })
+            });
+
+        
     }
 
 
