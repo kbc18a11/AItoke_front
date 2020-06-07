@@ -15,7 +15,7 @@ export default class MyMessageForm extends Component {
 
         this.doChange_message = this.doChange_message.bind(this);
         this.validation = this.validation.bind(this);
-        this.doGetNobyAPI = this.doGetNobyAPI.bind(this);
+        this.doGetAPI = this.doGetAPI.bind(this);
     }
 
     /**
@@ -53,17 +53,41 @@ export default class MyMessageForm extends Component {
      * APIとの通信
      * @param {*} e 
      */
-    doGetNobyAPI(e) {
+    doGetAPI(e) {
         //バリデーションの検証
         if (this.validation()) return;
 
-        //APIとの通信開始
-        axios.get(_URL + '/takText?text=' + this.state.message)
+        //親に上げるデータ群
+        const upToData = { taget: this, voiceText: null, voiceURL: null };
+
+        //NobyAPIとの通信開始
+        axios.get(_URL + '/talkText?text=' + this.state.message)
+            //通信が成功
             .then((res) => {
                 console.log(res);
 
-                this.props.onChange({ target: this, voice: res.data.text });
+                //受信データを格納
+                upToData.voiceText = res.data.text;
             })
+            .then(() => {
+                //AmazonPollyと通信開始
+                axios.get(_URL + '/talkVoice?text=' + upToData.voiceText)
+                    //通信が成功
+                    .then((res) => {
+                        console.log(res);
+
+                        //受信データを格納
+                        upToData.voiceURL = res.data.voiceURL;
+                        //親にデータを送信
+                        this.props.onChange(upToData);
+                    })
+                    //通信が失敗
+                    .catch((params) => {
+
+                    })
+
+            })
+            //通信が失敗
             .catch((error) => {
                 console.log(error);
                 alert('サーバー側でエラーが発生しました。');
@@ -88,7 +112,7 @@ export default class MyMessageForm extends Component {
                             placeholder="メッセージを入力してください"
                             className="" onChange={this.doChange_message} /></Col>
                         <Col xs={6} md={3}><Button variant="primary" block className="">自分の声で喋る</Button></Col>
-                        <Col xs={6} md={3}><Button variant="primary" block className="" onClick={this.doGetNobyAPI}>メッセージを届ける</Button></Col>
+                        <Col xs={6} md={3}><Button variant="primary" block className="" onClick={this.doGetAPI}>メッセージを届ける</Button></Col>
                     </Row>
                 </Form>
             </Container>
