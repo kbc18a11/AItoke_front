@@ -81,10 +81,12 @@ export default class MyMessageForm extends Component {
                         //親にデータを送信
                         this.props.onChange(upToData);
                     })
-                    //通信が失敗
-                    .catch((params) => {
-
-                    })
+                   //通信が失敗
+            .catch((error) => {
+                console.log(error);
+                alert('サーバー側でエラーが発生しました。');
+                return;
+            });
 
             })
             //通信が失敗
