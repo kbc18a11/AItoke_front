@@ -58,18 +58,20 @@ export default class MyMessageForm extends Component {
         if (this.validation()) return;
 
         //APIとの通信開始
-        axios.get(_URL + '/talkText?text=' + this.state.message)
+        axios.get(_URL + '/takText?text=' + this.state.message)
             .then((res) => {
                 console.log(res);
+
+                this.props.onChange({ target: this, voice: res.data.text });
             })
             .catch((error) => {
                 console.log(error);
+                alert('サーバー側でエラーが発生しました。');
+                return;
             });
 
-        
+
     }
-
-
 
 
     render() {
