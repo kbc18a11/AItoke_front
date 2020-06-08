@@ -23,7 +23,6 @@ export default class Wada extends Component {
     render() {
         return (
             <div>
-                <Button variant="primary">Primary</Button>
                 <h1>{this.state.voiceText}</h1>
                 <MyMessageForm onChange={e => this.setVoice(e)} />
                 <SpeechBubble text={this.state.voiceText}/>
