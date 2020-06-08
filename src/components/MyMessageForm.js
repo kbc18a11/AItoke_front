@@ -60,7 +60,7 @@ export default class MyMessageForm extends Component {
         if (this.validation()) return;
 
         //親に上げるデータ群
-        const upToData = { taget: this, voiceText: null, voiceURL: null };
+        const upToData = { taget: this, voiceText: null};
 
         //通信を開始するため、ボタンを押せなくする
         this.setState({ nowConnecting: true });
@@ -73,6 +73,8 @@ export default class MyMessageForm extends Component {
 
                 //受信データを格納
                 upToData.voiceText = res.data.text;
+
+                this.props.onChange(upToData);
             })
             .then(() => {
             })
