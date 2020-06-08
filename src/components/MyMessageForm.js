@@ -16,7 +16,6 @@ export default class MyMessageForm extends Component {
         }
 
         this.doChangeMessage = this.doChangeMessage.bind(this);
-        this.validation = this.validation.bind(this);
         this.doGetAPI = this.doGetAPI.bind(this);
     }
 
