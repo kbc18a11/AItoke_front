@@ -75,25 +75,6 @@ export default class MyMessageForm extends Component {
                 upToData.voiceText = res.data.text;
             })
             .then(() => {
-                
-                //AmazonPollyと通信開始
-                axios.get(_URL + '/talkVoice?text=' + upToData.voiceText)
-                    //通信が成功
-                    .then((res) => {
-                        console.log(res);
-
-                        //受信データを格納
-                        upToData.voiceURL = res.data.voiceURL;
-                        //親にデータを送信
-                        this.props.onChange(upToData);
-                    })
-                    //通信が失敗
-                    .catch((error) => {
-                        console.log(error);
-                        alert('サーバー側でエラーが発生しました。');
-                        return;
-                    });
-
             })
             //通信が失敗
             .catch((error) => {
