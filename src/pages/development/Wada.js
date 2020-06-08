@@ -8,21 +8,25 @@ export default class Wada extends Component {
         super(props);
 
         this.state = {
-            voice: ''
+            voiceText: '',
+            voiceURL: ''
         }
 
     }
 
     setVoice(e) {
-        this.setState({ voiceText: e.voice });
+        console.log(e.voiceURL);
+        
+        this.setState({ voiceText: e.voiceText, voiceURL: e.voiceURL });
     }
 
     render() {
         return (
             <div>
                 <Button variant="primary">Primary</Button>
-                <h1>{this.state.voice}</h1>
-                <MyMessageForm onChange={e => this.setVoice(e)}/>
+                <h1>{this.state.voiceText}</h1>
+                <h1>{this.state.voiceURL}</h1>
+                <MyMessageForm onChange={e => this.setVoice(e)} />
             </div>
         )
     }
