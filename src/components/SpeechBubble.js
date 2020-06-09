@@ -14,15 +14,18 @@ export default class SpeechBubble extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps);
-        
+
         this.setState({ text: nextProps.text });
     }
 
     render() {
         return (
-            <div className="speechBubble" stylename="speechBubble">
-                <h1>{this.state.text}</h1>
-            </div>
+            <Container>
+                <Row className="speechBubble .d-none .d-sm-block">
+                    <h1>{this.state.text}</h1>
+                </Row>
+            </Container>
+
         )
     }
 }
