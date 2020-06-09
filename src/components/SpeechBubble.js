@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/speechBubble.css';
 
