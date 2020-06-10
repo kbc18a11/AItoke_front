@@ -14,11 +14,13 @@ export default class TalkingLog extends Component {
         this.state.logList.push(text);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+
+        this.addList(nextProps.text);
+    }
+
     render() {
-        this.addList('うんこ');
-        this.addList('うんこ');
-        this.addList('うんこ');
-        this.addList('うんこ');
 
         const log = this.state.logList.map((text) => <p>{text}</p>);
 
