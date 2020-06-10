@@ -13,7 +13,6 @@ export default class SpeechBubble extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
 
         this.setState({ text: nextProps.text });
     }
