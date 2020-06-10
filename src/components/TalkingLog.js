@@ -16,7 +16,7 @@ export default class TalkingLog extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps);
-
+        //送られてきた新しいセリフを末尾に追加
         this.addList(nextProps.text);
     }
 
