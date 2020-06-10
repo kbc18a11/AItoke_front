@@ -59,11 +59,7 @@ export default class MyMessageForm extends Component {
         //バリデーションの検証
         if (this.validation()) return;
 
-        //TalkingLogに上げる自分の会話のログ
-        this.props.setLog({ who: '自分', text: this.state.message });
-
-        //親に上げるデータ群
-        const upToData = { taget: this, voiceText: null };
+        
 
         //通信を開始するため、ボタンを押せなくする
         this.setState({ nowConnecting: true });
@@ -75,8 +71,10 @@ export default class MyMessageForm extends Component {
                 //console.log(res);
 
                 //SpeechBubbleに送るtext
-                this.props.onChange(res.data.text);
+                this.props.setVoice(res.data.text);
 
+                //TalkingLogに上げる自分の会話のログ
+                this.props.setLog({ who: '自分', text: this.state.message });
                 //TalkingLogに送るAIの会話のlog
                 this.props.setLog({ who: 'AI', text: res.data.text });
             })
