@@ -10,19 +10,18 @@ export default class TalkingLog extends Component {
         }
     }
 
-    addList(text) {
-        this.state.logList.push(text);
+    addList(log) {
+        this.state.logList.push(log);
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
+        console.log(nextProps.log);
         //送られてきた新しいセリフを末尾に追加
-        this.addList(nextProps.text);
+        this.addList(nextProps.log);
     }
 
     render() {
-
-        const log = this.state.logList.map((text) => <p>{text}</p>);
+        const log = this.state.logList.map((log) => <p>{log.who}:{log.text}</p>);
 
         return (
             <div>
