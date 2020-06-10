@@ -59,6 +59,9 @@ export default class MyMessageForm extends Component {
         //バリデーションの検証
         if (this.validation()) return;
 
+        //TalkingLogに上げる自分の会話のログ
+        this.props.setLog({ who: '自分', text: this.state.message });
+
         //親に上げるデータ群
         const upToData = { taget: this, voiceText: null };
 
@@ -69,12 +72,13 @@ export default class MyMessageForm extends Component {
         axios.get(_URL + '/talkText?text=' + this.state.message)
             //通信が成功
             .then((res) => {
-                console.log(res);
+                //console.log(res);
 
-                //受信データを格納
-                upToData.voiceText = res.data.text;
+                //SpeechBubbleに送るtext
+                this.props.onChange(res.data.text);
 
-                this.props.onChange(upToData);
+                //TalkingLogに送るAIの会話のlog
+                this.props.setLog({ who: 'AI', text: res.data.text });
             })
             //通信が失敗
             .catch((error) => {
