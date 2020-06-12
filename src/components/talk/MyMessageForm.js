@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { _URL } from '../apiURL/AITalk_outApiCall_and_Auth';
+import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import axios from 'axios';
 export default class MyMessageForm extends Component {
 

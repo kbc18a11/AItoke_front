@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/speechBubble.css';
+import '../../css/speechBubble.css';
 
 export default class SpeechBubble extends Component {
     constructor(props) {
