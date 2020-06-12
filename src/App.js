@@ -1,15 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Wada from './pages/development/Wada';
 import Murase from './pages/development/Murase';
 import Tsutsui from './pages/development/Tsutsui';
 import Nakagoshi from './pages/development/Nakagoshi';
+import DefaultNavigationbar from './components/navber/DefaultNavigationbar';
+
 
 function App() {
   return (
     <div className="App">
+      <DefaultNavigationbar/>
       <div>
         <Router>
           <Switch>
