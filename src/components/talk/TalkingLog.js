@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../css/talkingLog.css'
 
 export default class TalkingLog extends Component {
     constructor(props) {
@@ -36,15 +37,17 @@ export default class TalkingLog extends Component {
         );
 
         return (
-            <Table striped bordered hover size="sm" className="overflow-auto">
-                <thead>
-                    <tr>
-                        <th>名前</th>
-                        <th>セリフ</th>
-                    </tr>
-                </thead>
-                {log}
-            </Table>
+            <div id="talkingLog">
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>名前</th>
+                            <th>セリフ</th>
+                        </tr>
+                    </thead>
+                    {log}
+                </Table>
+            </div>
         );
     }
 }
