@@ -5,6 +5,7 @@ import Wada from './pages/development/Wada';
 import Murase from './pages/development/Murase';
 import Tsutsui from './pages/development/Tsutsui';
 import Nakagoshi from './pages/development/Nakagoshi';
+import Talking from './pages/appPages/Talking';
 import DefaultNavigationbar from './components/navber/DefaultNavigationbar';
 
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/murase" component={Murase} />
             <Route path="/tsutsui" component={Tsutsui} />
             <Route path="/nakagoshi" component={Nakagoshi} />
+            <Route path="/taking" component={Talking} />
           </Switch>
         </Router>
       </div>
