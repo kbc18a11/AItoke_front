@@ -1,21 +1,5 @@
 .speechBubble {
-  position: relative;
-  margin: 1.5em 0 1.5em 15px;
-  padding: 7px 10px;
-  min-width: 120px;
-  max-width: 100%;
-  color: #555;
-  font-size: 16px;
-  background: #fff;
+  margin: 10px 0px 10px 0px;
   border: solid 3px #555;
   box-sizing: border-box;
-  
-}
-
-
-
-.speechBubble p {
-  margin: 0;
-  padding: 0;
-  
 }

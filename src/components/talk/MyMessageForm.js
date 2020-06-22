@@ -59,8 +59,6 @@ export default class MyMessageForm extends Component {
         //バリデーションの検証
         if (this.validation()) return;
 
-        
-
         //通信を開始するため、ボタンを押せなくする
         this.setState({ nowConnecting: true });
 
@@ -99,16 +97,17 @@ export default class MyMessageForm extends Component {
             margin: '1px'
         }
 
-
         return (
-            <Container>
+            <Container className="container">
                 <Form>
                     <Row>
-                        <Col xs={12} md={6}><FormControl type="text" style={marginStyle} value={this.state.message}
-                            placeholder="メッセージを入力してください"
-                            className="" onChange={this.doChangeMessage} /></Col>
+                        <Col xs={12} md={6}　className="buttons">
+                            <FormControl type="text" style={marginStyle} value={this.state.message}
+                                placeholder="メッセージを入力してください"
+                                className="" onChange={this.doChangeMessage} />
+                        </Col>
                         <Col xs={6} md={3}><Button variant="primary" block className="">自分の声で喋る</Button></Col>
-                        <Col xs={6} md={3}><Button variant="primary" block className="" onClick={this.doGetAPI} disabled={this.state.nowConnecting}>メッセージを届ける</Button></Col>
+                        <Col xs={6} md={3}><Button variant="primary" block className="" onClick={this.doGetAPI} disabled={this.state.nowConnecting}>メッセージを送る</Button></Col>
                     </Row>
                 </Form>
             </Container>

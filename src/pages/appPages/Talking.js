@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyMessageForm from '../../components/talk/MyMessageForm';
 import SpeechBubble from '../../components/talk/SpeechBubble';
 import TalkingLog from '../../components/talk/TalkingLog';
+import '../../css/myMessageForm.css';
 
 export default class Talking extends Component {
     constructor(props) {
@@ -37,12 +38,14 @@ export default class Talking extends Component {
 
     render() {
         return (
-            <div>
-                <h1>{this.state.voiceText}</h1>
-                <MyMessageForm setVoice={e => this.setVoice(e)} setLog={e => this.setLog(e)} />
-                <SpeechBubble text={this.state.voiceText} />
-                <TalkingLog log={this.state.log} />
-            </div>
+            <Row>
+                <Col md={4}><h1>{this.state.voiceText}</h1></Col>
+                <Col md={8}>
+                    <SpeechBubble text={this.state.voiceText} />
+                    <MyMessageForm setVoice={e => this.setVoice(e)} setLog={e => this.setLog(e)} />
+                    <TalkingLog log={this.state.log} />
+                </Col>
+            </Row>
         )
     }
 }

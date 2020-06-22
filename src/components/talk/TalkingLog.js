@@ -30,16 +30,16 @@ export default class TalkingLog extends Component {
     getTime() {
         //現在の時間を取得
         const time = new Date();
-        
+
         //表示させる時間をフォーマット化
-        return `${time.getHours()} : ${time.getMinutes()} : ${time.getSeconds()}` 
+        return `${time.getHours()} : ${time.getMinutes()} : ${time.getSeconds()}`
     }
 
     render() {
         //ログのTableタグの行を展開
         const log = this.state.logList.map((log) =>
             <tr>
-                <td>{log.who}</td>
+                <td className="who">{log.who}</td>
                 <td>{log.text}</td>
                 <td>{this.getTime()}</td>
             </tr>
@@ -50,7 +50,7 @@ export default class TalkingLog extends Component {
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
-                            <th>名前</th>
+                            <th className="who">名前</th>
                             <th>セリフ</th>
                             <th>時間</th>
                         </tr>
