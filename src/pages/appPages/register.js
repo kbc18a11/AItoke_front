@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Form, FormControl, Button, Container, Row,Col } from 'react-bootstrap';
+import { Form, FormControl, Button, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
+import Text from '../../components/formItems/Text';
 
 export default class register extends Component {
     render() {
@@ -10,6 +11,9 @@ export default class register extends Component {
                 <Row>
                     <Col>
                         <Form>
+                            <Text lavelText="Email address"
+                                type="email" placeholder="メールアドレスを入力"
+                                underMessage="" validationRules={null}/>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control type="email" placeholder="Enter email" />
