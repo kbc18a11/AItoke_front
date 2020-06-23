@@ -37,7 +37,6 @@ export default class MyMessageForm extends Component {
             return true;
         }
 
-
         return false;
     }
 
@@ -66,8 +65,6 @@ export default class MyMessageForm extends Component {
         axios.get(_URL + '/talkText?text=' + this.state.message)
             //通信が成功
             .then((res) => {
-                //console.log(res);
-
                 //SpeechBubbleに送るtext
                 this.props.setVoice(res.data.text);
 
@@ -78,7 +75,7 @@ export default class MyMessageForm extends Component {
             })
             //通信が失敗
             .catch((error) => {
-                console.log(error);
+                //console.log(error);
                 alert('サーバー側でエラーが発生しました。');
                 return;
             })
@@ -87,8 +84,6 @@ export default class MyMessageForm extends Component {
                 //通信が終了したため、ボタンを押せるようにする
                 this.setState({ nowConnecting: false });
             });
-
-
     }
 
 
