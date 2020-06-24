@@ -34,7 +34,7 @@ export default class Live2DController extends Component {
             this.countDidUpdate = 0;
             return;
         }
-        
+
         //1回目であれば、喋る
         if (this.countDidUpdate === 1) {
             this.speaking();
@@ -53,11 +53,13 @@ export default class Live2DController extends Component {
         synthes.lang = 'ja-UP';
         synthes.text = this.state.voiceText;
         speechSynthesis.speak(synthes);
-
+        
+        //音声の再生中の処理
         synthes.onstart = function () {
             document.getElementById('character').src = opneMouth;
         }
 
+        //音声の再生が終わった後の処理
         synthes.onend = function () {
             document.getElementById('character').src = closeMouth;
         }
