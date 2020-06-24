@@ -15,7 +15,6 @@ export default class Talking extends Component {
             voiceText: '　',//ユーザーとAIのじゃべった内容
             log: { who: '', text: '' }//ログ1行分
         }
-
     }
 
     /**
@@ -32,21 +31,23 @@ export default class Talking extends Component {
      * @param {*} inLog 
      */
     setLog(inLog) {
-        console.log(inLog);
-
+        //console.log(inLog);
+        
         this.setState({ log: { who: inLog.who, text: inLog.text } });
     }
 
     render() {
+        //console.log(this.state.voiceText, this.state.log);
+
         return (
             <Row>
-                <Col md={4}><Live2DController modelSpeech={this.state.log.who === 'AI' ? this.state.log.text : ''} /></Col>
+                <Col md={4}><Live2DController voiceText={this.state.voiceText} /></Col>
                 <Col md={8}>
                     <SpeechBubble text={this.state.voiceText} />
                     <MyMessageForm setVoice={e => this.setVoice(e)} setLog={e => this.setLog(e)} />
                     <TalkingLog log={this.state.log} />
                 </Col>
             </Row>
-        )
+        );
     }
 }
