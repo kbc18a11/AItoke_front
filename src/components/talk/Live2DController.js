@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import character0 from './../../image/character0.png';
-import character1 from './../../image/character1.png';
+import closeMouth from './../../image/character0.png';
+import opneMouth from './../../image/character1.png';
 import '../../css/characterFace.css';
 
 export default class Live2DController extends Component {
@@ -8,46 +8,66 @@ export default class Live2DController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modelSpeech: this.props.voiceText
+            //モデルに喋らせる内容
+            voiceText: this.props.voiceText,
+            //モデルの画像の状態
+            faceState: closeMouth,
         }
+        //componentDidUpdate()が呼ばれた回数
+        this.countDidUpdate = 0;
     }
 
     componentWillReceiveProps(nextProps) {
-        //前と同じセリフを言ったら、スキップ
-        if (this.state.modelSpeech === nextProps.modelSpeech) {
+        if (this.state.voiceText === nextProps.voiceText) {
+            return;
+        }
+
+        this.setState({ voiceText: nextProps.voiceText });
+    }
+
+    componentDidUpdate() {
+        //呼ばれたためカウント
+        this.countDidUpdate++;
+
+        //呼ばれて3回目で0回目でリセット
+        if (this.countDidUpdate === 3) {
+            this.countDidUpdate = 0;
             return;
         }
         
-        this.setState({ modelSpeech: nextProps.modelSpeech });
-        this.speaking();
+        //1回目であれば、喋る
+        if (this.countDidUpdate === 1) {
+            this.speaking();
+        }
     }
 
-
+    /**
+     * 音声の制御
+     */
     speaking() {
-        console.log(this.state.modelSpeech);
-        
         const synthes = new SpeechSynthesisUtterance();
         synthes.voiceURI = 'native';
         synthes.volume = 1.0; //音量 min 0 ~ max 1
         synthes.rate = 1.0;   //速度 min 0 ~ max 10
         synthes.pitch = 1.0;　//音程 min 0 ~ max 2
         synthes.lang = 'ja-UP';
-        synthes.text = this.state.modelSpeech;
+        synthes.text = this.state.voiceText;
         speechSynthesis.speak(synthes);
-        
+
         synthes.onstart = function () {
-            document.getElementById('character').src = character1;
+            document.getElementById('character').src = opneMouth;
         }
-        
+
         synthes.onend = function () {
-            document.getElementById('character').src = character0;
+            document.getElementById('character').src = closeMouth;
         }
     }
 
     render() {//描写処理
+
         return (
             <div>
-                <img id='character' src={character0} alt='' />
+                <img id='character' src={this.state.faceState} alt='' />
             </div>
         );
     }
