@@ -54,36 +54,33 @@ export default class MyMessageForm extends Component {
      * APIとの通信
      * @param {*} e 
      */
-    doGetAPI(e) {
+    async doGetAPI(e) {
         //バリデーションの検証
         if (this.validation()) return;
 
         //通信を開始するため、ボタンを押せなくする
         this.setState({ nowConnecting: true });
 
-        //NobyAPIとの通信開始
-        axios.get(_URL + '/talkText?text=' + this.state.message)
-            //通信が成功
-            .then((res) => {
-                //SpeechBubbleに送るtext
-                this.props.setVoice(res.data.text);
+        try {
+            //NobyAPIとの通信開始
+            const responce = await axios.get(_URL + '/talkText?text=' + this.state.message);
+            //console.log(responce);
+            
+            //SpeechBubbleに送るtext
+            this.props.setVoice(responce.data.text);
 
-                //TalkingLogに上げる自分の会話のログ
-                this.props.setLog({ who: '自分', text: this.state.message });
-                //TalkingLogに送るAIの会話のlog
-                this.props.setLog({ who: 'AI', text: res.data.text });
-            })
-            //通信が失敗
-            .catch((error) => {
-                //console.log(error);
-                alert('サーバー側でエラーが発生しました。');
-                return;
-            })
-            //通信終了
-            .finally(() => {
-                //通信が終了したため、ボタンを押せるようにする
-                this.setState({ nowConnecting: false });
-            });
+            //TalkingLogに上げる自分の会話のログ
+            this.props.setLog({ who: '自分', text: this.state.message });
+            //TalkingLogに送るAIの会話のlog
+            this.props.setLog({ who: 'AI', text: responce.data.text });
+        } catch (error) {
+            console.log(error);
+            alert('サーバー側でエラーが発生しました。');
+            return;
+        } finally {
+            //通信が終了したため、ボタンを押せるようにする
+            this.setState({ nowConnecting: false });
+        }
     }
 
 
@@ -96,7 +93,7 @@ export default class MyMessageForm extends Component {
             <Container className="container">
                 <Form>
                     <Row>
-                        <Col xs={12} md={6}　className="buttons">
+                        <Col xs={12} md={6} className="buttons">
                             <FormControl type="text" style={marginStyle} value={this.state.message}
                                 placeholder="メッセージを入力してください"
                                 className="" onChange={this.doChangeMessage} />
