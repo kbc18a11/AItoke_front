@@ -13,13 +13,22 @@ export default class TalkingLog extends Component {
         }
     }
 
+    /**
+     * ログリストの末尾に新しいログを入れる
+     * @param {*} log 
+     */
     addList(log) {
+        //console.log(log);
+        //ログのリストの要素が１以上 && 末尾のテキストと新しいログのテキストが一緒か？
+        if (this.state.logList.length > 0
+            && this.state.logList[this.state.logList.length - 1].text === log.text) {
+            return;
+        }
+
         this.state.logList.push(log);
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.log);
-
         //ログの内容が空白文字やundifindじゃないか？
         if (nextProps.log.who || nextProps.log.text) {
             //送られてきた新しいセリフを末尾に追加
@@ -27,15 +36,20 @@ export default class TalkingLog extends Component {
         }
     }
 
+    /**
+     * '時:分:秒'を返す
+     */
     getTime() {
         //現在の時間を取得
         const time = new Date();
 
         //表示させる時間をフォーマット化
-        return `${time.getHours()} : ${time.getMinutes()} : ${time.getSeconds()}`
+        return `${time.getHours()} : ${time.getMinutes()} : ${time.getSeconds()}`;
     }
 
     render() {
+        //console.log(this.state.logList);
+
         //ログのTableタグの行を展開
         const log = this.state.logList.map((log) =>
             <tr>
