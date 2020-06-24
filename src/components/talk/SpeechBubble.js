@@ -8,6 +8,7 @@ export default class SpeechBubble extends Component {
         super(props);
 
         this.state = {
+            //表示する内容
             text: this.props.text
         }
     }
