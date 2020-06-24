@@ -8,17 +8,24 @@ export default class Live2DController extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modelSpeech: ''
+            modelSpeech: this.props.voiceText
         }
     }
 
     componentWillReceiveProps(nextProps) {
+        //前と同じセリフを言ったら、スキップ
+        if (this.state.modelSpeech === nextProps.modelSpeech) {
+            return;
+        }
+        
         this.setState({ modelSpeech: nextProps.modelSpeech });
         this.speaking();
     }
 
 
     speaking() {
+        console.log(this.state.modelSpeech);
+        
         const synthes = new SpeechSynthesisUtterance();
         synthes.voiceURI = 'native';
         synthes.volume = 1.0; //音量 min 0 ~ max 1
