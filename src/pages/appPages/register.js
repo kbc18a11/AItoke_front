@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Form, FormControl, Button, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
-import Text from '../../components/formItems/Text';
 
 export default class register extends Component {
     render() {
@@ -11,30 +10,29 @@ export default class register extends Component {
                 <Row>
                     <Col>
                         <Form>
-                            <Text lavelText="Email address"
-                                type="email" placeholder="メールアドレスを入力"
-                                underMessage="" validationRules={null}/>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                            </Form.Text>
+                            <Form.Group className="name">
+                                <Form.Label>名前</Form.Label>
+                                <Form.Control type="text" placeholder="名前を入力" />
+                                <Form.Text className="error"></Form.Text>
                             </Form.Group>
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
+                            <Form.Group className="email">
+                                <Form.Label>メールアドレス</Form.Label>
+                                <Form.Control type="email" placeholder="メールアドレスを入力" />
+                                <Form.Text className="error"></Form.Text>
                             </Form.Group>
-                            <Form.Group controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Check me out" />
+                            <Form.Group className="password">
+                                <Form.Label>パスワード</Form.Label>
+                                <Form.Control type="error" placeholder="パスワードを入力" />
                             </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Submit
-                        </Button>
+                            <Form.Group className="password_confirmation">
+                                <Form.Label>パスワードの確認</Form.Label>
+                                <Form.Control type="error" placeholder="パスワードの確認入力" />
+                            </Form.Group>
+                            <Button variant="primary">登録</Button>
                         </Form>
                     </Col>
                 </Row>
             </Container>
-        )
+        );
     }
 }
