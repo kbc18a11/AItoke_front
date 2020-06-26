@@ -21,7 +21,7 @@ export default class register extends Component {
                 email: '',
                 password: '',
                 password_confirmation: ''
-            }
+            },
         };
 
         this.setName = this.setName.bind(this);
@@ -57,13 +57,14 @@ export default class register extends Component {
             const erroeMessagesCopy = this.state.erroeMessages;
             erroeMessagesCopy.name = '';
             this.setState({ erroeMessages: erroeMessagesCopy });
-            return;
+            return true;
         }
 
         //エラーメッセージを格納
         const erroeMessagesCopy = this.state.erroeMessages;
         erroeMessagesCopy.name = '255文字以下の名前を入力してください';
         this.setState({ erroeMessages: erroeMessagesCopy });
+        return false;
     }
 
     /**
@@ -77,33 +78,34 @@ export default class register extends Component {
             const erroeMessagesCopy = this.state.erroeMessages;
             erroeMessagesCopy.email = '';
             this.setState({ erroeMessages: erroeMessagesCopy });
-            return;
+            return true;
         }
 
         //エラーメッセージを格納
         const erroeMessagesCopy = this.state.erroeMessages;
         erroeMessagesCopy.email = '255文字以下のメールアドレスを入力してください';
         this.setState({ erroeMessages: erroeMessagesCopy });
+        return false;
     }
 
     /**
      * passwordの入力チェック
      */
     checkPassword() {
-        
         //８文字以上のパスワードは入力済みか？
         if (this.state.password.length > 8) {
             //エラーメッセージを空にする
             const erroeMessagesCopy = this.state.erroeMessages;
             erroeMessagesCopy.password = '';
             this.setState({ erroeMessages: erroeMessagesCopy });
-            return;
+            return true;
         }
 
         //エラーメッセージを格納
         const erroeMessagesCopy = this.state.erroeMessages;
         erroeMessagesCopy.password = '8文字以上のパスワードを入力してください';
         this.setState({ erroeMessages: erroeMessagesCopy });
+        return false;
     }
 
     /**
@@ -116,29 +118,35 @@ export default class register extends Component {
             const erroeMessagesCopy = this.state.erroeMessages;
             erroeMessagesCopy.password_confirmation = '';
             this.setState({ erroeMessages: erroeMessagesCopy });
-            return;
+            return true;
         }
 
         //エラーメッセージを格納
         const erroeMessagesCopy = this.state.erroeMessages;
         erroeMessagesCopy.password_confirmation = 'パスワードが一致していません';
         this.setState({ erroeMessages: erroeMessagesCopy });
+        return false;
     }
 
     /**
      * 全てのバリデーションを実施する
      */
     doValidation() {
-        this.checkName();
-        this.checkEmail();
-        this.checkPassword();
+        //それぞれのバリデーションのパターンにあってるか結果を返す    
+        return this.checkName() &
+            this.checkEmail() &
+            this.checkPassword() &&
+            this.checkPasswordConfirmation();
     }
 
     /**
      * 登録ボタンを押したときに作動
      */
     doSubmit() {
-        this.doValidation();
+        //バリデーションにマッチしてないか？
+        if (!this.doValidation()) {
+            return;
+        }
     }
 
     render() {
