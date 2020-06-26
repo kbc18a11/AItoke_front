@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, FormControl, Button, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
+import '../../css/errorText.css';
 
 export default class register extends Component {
 
