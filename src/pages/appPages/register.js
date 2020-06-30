@@ -149,13 +149,27 @@ export default class Register extends Component {
             password_confirmation: this.state.password_confirmation,
         }
 
+        
         //ユーザー登録APIにリクエスト
         try {
             await axios.post(_URL + '/register', requestBody);
-        } catch (error) {
-            console.log(error);
-        }
 
+            console.log();
+        } catch (error) {
+            console.log(error.response);
+            const errorMessages = error.response.data.error;
+
+            //バリデーションによるユーザー登録ができなかった場合
+            if (!errorMessages.createResult) {
+                //メールアドレスのバリデーションエラーか？
+                if (errorMessages.email) {
+                    //エラーメッセージを格納
+                    const erroeMessagesCopy = this.state.erroeMessages;
+                    erroeMessagesCopy.email = errorMessages.email;
+                    this.setState({ erroeMessages: erroeMessagesCopy });
+                }
+            }
+        }
     }
 
     /**
