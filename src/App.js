@@ -6,7 +6,7 @@ import Murase from './pages/development/Murase';
 import Tsutsui from './pages/development/Tsutsui';
 import Nakagoshi from './pages/development/Nakagoshi';
 import Talking from './pages/appPages/Talking';
-import Register from './pages/appPages/register';
+import Register from './pages/appPages/Register';
 import DefaultNavigationbar from './components/navber/DefaultNavigationbar';
 
 
