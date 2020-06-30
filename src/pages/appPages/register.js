@@ -3,7 +3,8 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
 import '../../css/errorText.css';
-
+import axios from 'axios';
+import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 export default class Register extends Component {
 
     constructor(props) {
@@ -139,6 +140,24 @@ export default class Register extends Component {
             this.checkPasswordConfirmation();
     }
 
+    async requestRegister() {
+        //リクエストボディ
+        const requestBody = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation,
+        }
+
+        //ユーザー登録APIにリクエスト
+        try {
+            await axios.post(_URL + '/register', requestBody);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     /**
      * 登録ボタンを押したときに作動
      */
@@ -147,6 +166,9 @@ export default class Register extends Component {
         if (!this.doValidation()) {
             return;
         }
+
+        //ユーザー登録へリクエスト開始
+        this.requestRegister();
     }
 
     render() {
