@@ -71,8 +71,8 @@ export default class Register extends Component {
      */
     checkValidation(targetKey, targetValue, rules, errorMessagesNumber) {
         //console.log({ [targetKey]: targetValue });
-        console.log(rules);
-        
+        //console.log(rules);
+
 
         //バリデーションを検証
         const validation = new Validator(
