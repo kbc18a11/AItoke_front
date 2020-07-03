@@ -10,9 +10,9 @@ export default class NavberState extends Component {
      * @param {boolean} nowLogin ログインの状態
      */
     isNowLogin(nowLogin) {
-        console.log(typeof(nowLogin));
+        //console.log(typeof(nowLogin));
+        //console.log(nowLogin);
         
-        console.log(nowLogin);
         //ログインしているか？
         if (nowLogin) {
             return (<NowLoginNavigationbar />);
