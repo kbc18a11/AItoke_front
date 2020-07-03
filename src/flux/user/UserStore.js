@@ -9,13 +9,13 @@ class UserStore extends EventEmitter {
 
         //常用するユーザーの情報
         this.userStatus = {
-            userID: localStorage.getItem('userId'),
+            userID: Number(localStorage.getItem('userId')),
             name: localStorage.getItem('name'),
             icon: localStorage.getItem('icon'),
         }
 
         //現在ログイン中なのか？の判定
-        this.nowLogin = localStorage.getItem('nowLogin');
+        this.nowLogin = Boolean(localStorage.getItem('nowLogin').toLocaleLowerCase() === 'true');
         //Jwt認証用のトークン
         this.token = localStorage.getItem('token');
     }
@@ -26,6 +26,8 @@ class UserStore extends EventEmitter {
      * @param {any} value 
      */
     setLocalStorage(key, value) {
+        console.log(key, value);
+
         //keyにvalueを保存
         localStorage.setItem(key, value);
     }
@@ -42,6 +44,7 @@ class UserStore extends EventEmitter {
      * @param {object} action {type,それぞれ応じたセットした値の名前}
      */
     handleActions(action) {
+
         //アクションタイプから分岐
         switch (action.type) {
             case ActionType.SET_USERID:
@@ -70,13 +73,11 @@ class UserStore extends EventEmitter {
             //userStatus.nowLoginに対するアクション
             case ActionType.CHANGE_LOGIN:
                 this.nowLogin = action.nowLogin;
-                this.setLocalStorage('nowLogin', action.nowLogin);
+                this.setLocalStorage('nowLogin', action.nowlogin);
                 break;
             default:
                 return;
         }
-
-        this.emit();
     }
 }
 const userStore = new UserStore();
