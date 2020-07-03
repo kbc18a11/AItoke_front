@@ -11,7 +11,6 @@ export default class InputText extends Component {
             type: props.type,//Form.Control type
             placeholder: props.placeholder,//Form.Control placeholder
             outPutErrotMeaagages: props.outPutErrotMeaagages,//表示するバリデーションエラーメッセージ
-            rules: props.rules,//バリデーションルール
             setValue: props.setValue,//親のプロパティに対するセッター
         }
 
