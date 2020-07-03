@@ -7,13 +7,13 @@ import Tsutsui from './pages/development/Tsutsui';
 import Nakagoshi from './pages/development/Nakagoshi';
 import Talking from './pages/appPages/Talking';
 import Register from './pages/appPages/Register';
-import DefaultNavigationbar from './components/navber/DefaultNavigationbar';
+import NavberState from './flux/user/userViwe/NavberState';
 
 
 function App() {
   return (
     <div className="App">
-      <DefaultNavigationbar/>
+      <NavberState />
       <div>
         <Router>
           <Switch>
