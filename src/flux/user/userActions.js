@@ -48,7 +48,7 @@ export const actions = {
     /**
      * @param {boolean} nowlogin 
      */
-    changeLogin(nowlogin) {
-        userDispatcher.dispatch({ type: ActionType.SET_NAME, nowlogin: nowlogin });
+    changeLogin(nowLogin) {
+        userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: nowLogin });
     }
 };
