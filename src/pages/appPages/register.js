@@ -1,27 +1,41 @@
 import React, { Component } from 'react'
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import InputText from '../../components/fromItem/InputText';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
 import '../../css/errorText.css';
 import axios from 'axios';
 import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import Validator from 'validatorjs';
+
+
 export default class Register extends Component {
 
     constructor(props) {
         super(props);
 
+        //hogehogeNumber -> errorMessagesの格納場所
         this.state = {
             name: '',
+            nameErrorNumber: 0,
             email: '',
+            emailErrorNumber: 0,
             password: '',
+            passwordErrorNumber: 0,
             //パスワードの確認
             password_confirmation: '',
-            //それぞれのエラーメッセージ
-            erroeMessages: {
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
+            password_confirmationErrorNumber: 0,
+            //fromの項目ごとのバリデーションルール
+            rules: {
+                name: 'required|max:255',
+                email: ''
+            },
+            //項目ごとのエラーメッセージ
+            errorMessages: ['', '', '', ''],
+            //バリデーションルールごとのエラーメッセージ
+            ruleTypeErrorMessages: {
+                required: '必須項目です。',
+                max: '255文字以下入力してください',
             },
         };
 
@@ -49,95 +63,54 @@ export default class Register extends Component {
     }
 
     /**
-     * nameの入力チェック
+     * バリデーションチェック
+     * @param {string} targetKey //バリデーション対象の値の名前
+     * @param {string} targetValue //バリデーションの値
+     * @param {string} rule //バリデーションのルール
+     * @param {number} errorMessagesNumber //エラーメッセージを格納させる対象配列の添え字
      */
-    checkName() {
-        //255文字以下名前は入力済みか？
-        if (0 < this.state.name.length && this.state.name.length < 255) {
-            //エラーメッセージを空にする
-            const erroeMessagesCopy = this.state.erroeMessages;
-            erroeMessagesCopy.name = '';
-            this.setState({ erroeMessages: erroeMessagesCopy });
-            return true;
+    checkValidation(targetKey, targetValue, rules, errorMessagesNumber) {
+        //console.log({ [targetKey]: targetValue });
+        console.log(rules);
+        
+
+        //バリデーションを検証
+        const validation = new Validator(
+            { [targetKey]: targetValue },
+            { [targetKey]: rules },
+            this.state.ruleTypeErrorMessages
+        );
+        console.log(validation.fails(), targetValue);
+
+        //バリデーションエラーはあるか？
+        if (validation.fails()) {
+            console.log(validation.errors.all());
+
+            //配列をコピーして、エラーメッセージを格納
+            const errorMessages_copy = this.state.errorMessages.slice();
+            errorMessages_copy[errorMessagesNumber] = validation.errors.all().undefined;
+            this.setState({ errorMessages: errorMessages_copy });
+
+            return false;
         }
 
-        //エラーメッセージを格納
-        const erroeMessagesCopy = this.state.erroeMessages;
-        erroeMessagesCopy.name = '255文字以下の名前を入力してください';
-        this.setState({ erroeMessages: erroeMessagesCopy });
-        return false;
+        //バリデーションエラーはなかった
+        return true;
     }
 
-    /**
-     * emailの入力チェック
-     */
-    checkEmail() {
-        const pattern = /^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/;
-        //255文字以下メールアドレスは入力済みか？
-        if (pattern.test(this.state.email) && this.state.email.length < 255) {
-            //エラーメッセージを空にする
-            const erroeMessagesCopy = this.state.erroeMessages;
-            erroeMessagesCopy.email = '';
-            this.setState({ erroeMessages: erroeMessagesCopy });
-            return true;
-        }
 
-        //エラーメッセージを格納
-        const erroeMessagesCopy = this.state.erroeMessages;
-        erroeMessagesCopy.email = '255文字以下のメールアドレスを入力してください';
-        this.setState({ erroeMessages: erroeMessagesCopy });
-        return false;
-    }
-
-    /**
-     * passwordの入力チェック
-     */
-    checkPassword() {
-        //８文字以上のパスワードは入力済みか？
-        if (this.state.password.length > 8) {
-            //エラーメッセージを空にする
-            const erroeMessagesCopy = this.state.erroeMessages;
-            erroeMessagesCopy.password = '';
-            this.setState({ erroeMessages: erroeMessagesCopy });
-            return true;
-        }
-
-        //エラーメッセージを格納
-        const erroeMessagesCopy = this.state.erroeMessages;
-        erroeMessagesCopy.password = '8文字以上のパスワードを入力してください';
-        this.setState({ erroeMessages: erroeMessagesCopy });
-        return false;
-    }
-
-    /**
-     * password_confirmationの入力チェック
-     */
-    checkPasswordConfirmation() {
-        //入力したパスワードと確認入力したものが一致しているか？
-        if (this.state.password_confirmation === this.state.password) {
-            //エラーメッセージを空にする
-            const erroeMessagesCopy = this.state.erroeMessages;
-            erroeMessagesCopy.password_confirmation = '';
-            this.setState({ erroeMessages: erroeMessagesCopy });
-            return true;
-        }
-
-        //エラーメッセージを格納
-        const erroeMessagesCopy = this.state.erroeMessages;
-        erroeMessagesCopy.password_confirmation = 'パスワードが一致していません';
-        this.setState({ erroeMessages: erroeMessagesCopy });
-        return false;
-    }
 
     /**
      * 全てのバリデーションを実施する
      */
     doValidation() {
         //それぞれのバリデーションのパターンにあってるか結果を返す    
-        return this.checkName() &
+        return this.checkValidation('name', this.state.name, this.state.rules.name, this.state.nameErrorNumber);
+        /** 
             this.checkEmail() &
             this.checkPassword() &&
             this.checkPasswordConfirmation();
+            */
     }
 
     async requestRegister() {
@@ -149,7 +122,7 @@ export default class Register extends Component {
             password_confirmation: this.state.password_confirmation,
         }
 
-        
+
         //ユーザー登録APIにリクエスト
         try {
             await axios.post(_URL + '/register', requestBody);
@@ -180,6 +153,7 @@ export default class Register extends Component {
         if (!this.doValidation()) {
             return;
         }
+        return;
 
         //ユーザー登録へリクエスト開始
         this.requestRegister();
@@ -191,26 +165,12 @@ export default class Register extends Component {
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
                         <Form>
-                            <Form.Group className="name">
-                                <Form.Label>名前</Form.Label>
-                                <Form.Control type="text" placeholder="名前を入力" onChange={this.setName} />
-                                <Form.Text className="error">{this.state.erroeMessages.name}</Form.Text>
-                            </Form.Group>
-                            <Form.Group className="email">
-                                <Form.Label>メールアドレス</Form.Label>
-                                <Form.Control type="email" placeholder="メールアドレスを入力" onChange={this.setEmail} />
-                                <Form.Text className="error">{this.state.erroeMessages.email}</Form.Text>
-                            </Form.Group>
-                            <Form.Group className="password">
-                                <Form.Label>パスワード</Form.Label>
-                                <Form.Control type="password" placeholder="パスワードを入力" onChange={this.setPassword} />
-                                <Form.Text className="error">{this.state.erroeMessages.password}</Form.Text>
-                            </Form.Group>
-                            <Form.Group className="password_confirmation">
-                                <Form.Label>パスワードの確認</Form.Label>
-                                <Form.Control type="password" placeholder="パスワードの確認入力" onChange={this.setPassword_confirmation} />
-                                <Form.Text className="error">{this.state.erroeMessages.password_confirmation}</Form.Text>
-                            </Form.Group>
+                            <InputText className="name" label="名前" type="text"
+                                placeholder="名前を入力" outPutErrotMeaagages={this.state.errorMessages[this.state.nameErrorNumber]}
+                                setValue={this.setName} />
+                            <InputText className="email" label="メールアドレス" type="text"
+                                placeholder="メールアドレスを入力" outPutErrotMeaagages={this.state.errorMessages[this.state.emailErrorNumber]}
+                                setValue={this.setEmail} />
                             <Button variant="primary" onClick={this.doSubmit}>登録</Button>
                         </Form>
                     </Col>
