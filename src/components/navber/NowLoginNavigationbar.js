@@ -12,7 +12,6 @@ export default class NowLoginNavigationbar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#link">Link</Nav.Link>
-                        <Nav.Link href="/register">ユーザー登録</Nav.Link>
                     <UserNavMenu/>
                     </Nav>
                     <Form inline>
