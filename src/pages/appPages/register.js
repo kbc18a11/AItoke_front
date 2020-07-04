@@ -7,6 +7,8 @@ import '../../css/errorText.css';
 import axios from 'axios';
 import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import ValidationManager from '../../modules/class/ValidationManager';
+import { actions } from '../../flux/user/userActions';
+import userStore from '../../flux/user/UserStore';
 
 export default class Register extends Component {
 
@@ -38,7 +40,7 @@ export default class Register extends Component {
                 required: '必須項目です',
                 max: '255文字以下入力してください',
                 min: '8文字以上入力してください',
-                email:'メールアドレスを入力してください'
+                email: 'メールアドレスを入力してください'
             },
         };
 
@@ -110,11 +112,14 @@ export default class Register extends Component {
 
         //新しいエラーに変更
         this.setState({ errorMessages: errorMessagesCopy })
-        
+
         //最終的にエラーがあったか？
         return validationManager.isError;
     }
 
+    /**
+     * @returns {boolean} //ユーザー登録の結果を返す
+     */
     async requestRegister() {
         //リクエストボディ
         const requestBody = {
@@ -127,11 +132,15 @@ export default class Register extends Component {
 
         //ユーザー登録APIにリクエスト
         try {
-            await axios.post(_URL + '/register', requestBody);
+            const createResult = await (await axios.post(_URL + '/register', requestBody)).data.createResult;
 
-            console.log();
+            //ユーザー登録は成功したか？
+            if (createResult) {
+                return true;
+            }
+
         } catch (error) {
-            console.log(error.response);
+            //console.log(error.response);
             const errorMessages = error.response.data.error;
 
             //バリデーションによるユーザー登録ができなかった場合
@@ -144,20 +153,29 @@ export default class Register extends Component {
                     this.setState({ errorMessages: errorMessagesCopy });
                 }
             }
+
+            return false;
         }
+    }
+
+    async requestLogin() {
+        
     }
 
     /**
      * 登録ボタンを押したときに作動
      */
-    doSubmit() {
+    async doSubmit() {
         //バリデーションにエラーは存在しているか？
         if (this.doValidation()) {
             return;
         }
 
-        //ユーザー登録へリクエスト開始
-        this.requestRegister();
+        //ユーザー登録（/register）へリクエスト開始
+        //ユーザー登録は完了できたか？
+        if (await this.requestRegister()) {
+
+        }
     }
 
     render() {
