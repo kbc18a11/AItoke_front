@@ -42,13 +42,20 @@ export const actions = {
      */
     setJwtToken(token) {
         if (token) return;
-        userDispatcher.dispatch({ type: ActionType.SET_NAME, token: token });
+        userDispatcher.dispatch({ type: ActionType.SET_JWTTOKEN, token: token });
     },
 
     /**
-     * @param {boolean} nowlogin 
+     * ログイン
      */
-    changeLogin(nowLogin) {
-        userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: nowLogin });
+    login() {
+        userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: true });
+    },
+
+    /**
+     * ログアウト
+     */
+    logout() {
+        userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: true });
     }
 };
