@@ -91,12 +91,12 @@ export default class Register extends Component {
             email: this.state.email,
             password: this.state.password,
         };
-        const validationManager = new ValidationManager();
 
         //setState用にthis.state.errorMessagesをコピー
         let errorMessagesCopy = Object.assign({}, this.state.errorMessages);
+
+        const validationManager = new ValidationManager();
         //新しいエラーを返す
-        console.log(validationManager.checkValidation(targetData, this.state.rules, this.state.ruleTypeErrorMessages));
         errorMessagesCopy = validationManager.checkValidation(targetData, this.state.rules, this.state.ruleTypeErrorMessages);
 
         //this.state.password_confirmationのバリデーション
@@ -107,7 +107,10 @@ export default class Register extends Component {
             validationManager.isError = true;
             errorMessagesCopy.password_confirmation = resultObject.message;
         }
+
+        //新しいエラーに変更
         this.setState({ errorMessages: errorMessagesCopy })
+        
         //最終的にエラーがあったか？
         return validationManager.isError;
     }
