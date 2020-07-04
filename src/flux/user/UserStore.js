@@ -15,7 +15,7 @@ class UserStore extends EventEmitter {
         }
 
         //現在ログイン中なのか？の判定
-        this.nowLogin = Boolean(localStorage.getItem('nowLogin').toLocaleLowerCase() === 'true');
+        this.nowLogin = Boolean(localStorage.getItem('nowLogin') && localStorage.getItem('nowLogin').toLocaleLowerCase() === 'true');
         //Jwt認証用のトークン
         this.token = localStorage.getItem('token');
     }
@@ -67,7 +67,7 @@ class UserStore extends EventEmitter {
             //userStatus.tokenに対するアクション
             case ActionType.SET_JWTTOKEN:
                 this.token = action.token;
-                this.setLocalStorage('icon', action.token);
+                this.setLocalStorage('token', action.token);
                 break;
 
             //userStatus.nowLoginに対するアクション
