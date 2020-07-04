@@ -26,7 +26,7 @@ class UserStore extends EventEmitter {
      * @param {any} value 
      */
     setLocalStorage(key, value) {
-        console.log(key, value);
+        //console.log(key, value);
 
         //keyにvalueを保存
         localStorage.setItem(key, value);
