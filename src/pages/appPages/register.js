@@ -82,7 +82,7 @@ export default class Register extends Component {
 
     /**
      * 全てのバリデーションを実施する
-     * @returns {boolean} //バリデーションの結果
+     * @returns {boolean} //バリデーションエラーの存在
      */
     doValidation() {
         //checkValidationデータの対象
@@ -139,9 +139,9 @@ export default class Register extends Component {
                 //メールアドレスのバリデーションエラーか？
                 if (errorMessages.email) {
                     //エラーメッセージを格納
-                    const erroeMessagesCopy = this.state.erroeMessages;
-                    erroeMessagesCopy.email = errorMessages.email;
-                    this.setState({ erroeMessages: erroeMessagesCopy });
+                    const errorMessagesCopy = Object.assign({}, this.state.errorMessages);
+                    errorMessagesCopy.email = errorMessages.email;
+                    this.setState({ errorMessages: errorMessagesCopy });
                 }
             }
         }
@@ -151,11 +151,10 @@ export default class Register extends Component {
      * 登録ボタンを押したときに作動
      */
     doSubmit() {
-        //バリデーションにマッチしてないか？
-        if (!this.doValidation()) {
+        //バリデーションにエラーは存在しているか？
+        if (this.doValidation()) {
             return;
         }
-        return;
 
         //ユーザー登録へリクエスト開始
         this.requestRegister();
