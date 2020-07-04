@@ -2,46 +2,35 @@ import Validator from 'validatorjs';
 
 export default class ValidationManager {
     constructor() {
-        //バリデーションエラーの存在
+        //バリデーションの結果
         this.isError = false;
     }
 
-    
+
 
     /**
          * バリデーションチェック
-         * @param {string} targetKey //バリデーション対象の値の名前
-         * @param {string} targetValue //バリデーションの値
-         * @param {string} rule //バリデーションのルール
-         * @param {number} errorMessagesNumber //エラーメッセージを格納させる対象配列の添え字
+         * @param {object} data //バリデーションの値
+         * @param {object} rule //バリデーションのルール
+         * @param {object} ruleTypeErrorMessages //エラーの種類ごとのエラーのメッセージ
          */
-    checkValidation(targetData, rules, errorMessagesNumber) {
-        //console.log({ [targetKey]: targetValue });
-        //console.log(rules);
+    checkValidation(targetData, rules, ruleTypeErrorMessages) {
         //バリデーションを検証
         const validation = new Validator(
             targetData,
-            { [targetKey]: rules },
-            this.state.ruleTypeErrorMessages
+            rules,
+            ruleTypeErrorMessages
         );
-        //console.log(validation.fails(), targetValue);
 
+        //バリデーションの結果
+        this.isError = validation.fails();
         //バリデーションエラーはあるか？
-        if (validation.fails()) {
-            console.log(validation.errors.all());
-
-            //配列をコピーして、エラーメッセージを格納
-            const errorMessages_copy = this.state.errorMessages.slice();
-            errorMessages_copy[errorMessagesNumber] = validation.errors.all()[targetKey];
-
-            this.setState({ errorMessages: errorMessages_copy });
-
-            console.log(this.state.errorMessages);
-
-            return false;
+        if (this.isError) {
+            //エラーを返す
+            return validation.errors.all();
         }
 
         //バリデーションエラーはなかった
-        return true;
+        return {};
     }
 }
