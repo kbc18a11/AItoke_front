@@ -1,61 +1,24 @@
 import { userDispatcher } from './userDispatcher';
+import userStore from './UserStore';
 
 export const ActionType = {
-    //user_id
-    SET_USERID: 'SET_USERID',
-    //user_name
-    SET_NAME: 'SET_NAME',
-    //user_icon
-    SET_ICON: 'SET_ICON',
-    //jwt_token
-    SET_JWTTOKEN: 'SET_JWTTOKEN',
-    //ログインの判定
-    CHANGE_LOGIN: 'CHANGE_LOGIN'
+    REGISTER: 'REGISTER',
+    LOGIN: 'LOGIN'
 };
 
 export const actions = {
     /**
-     * @param {number}ユーザーid
-     */
-    setUserId: (userId) => {
-        if (!userId) return;
-        userDispatcher.dispatch({ type: ActionType.SET_NAME, value: userId });
-    },
-    /**
-     * @param {string} ユーザーネーム
-     */
-    setName: (name) => {
-        if (!name) return;
-        userDispatcher.dispatch({ type: ActionType.SET_NAME, name: name });
-    },
-
-    /**
-     * @param {string} icon 
-     */
-    setIcon(icon) {
-        if (icon) return;
-        userDispatcher.dispatch({ type: ActionType.SET_NAME, icon: icon });
-    },
-
-    /**
-     * @param {string} token 
-     */
-    setJwtToken(token) {
-        if (token) return;
-        userDispatcher.dispatch({ type: ActionType.SET_JWTTOKEN, token: token });
-    },
-
-    /**
-     * ログイン
-     */
-    login() {
-        userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: true });
-    },
-
-    /**
      * ログアウト
      */
-    logout() {
+    logout: () => {
         userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: true });
-    }
+    },
+
+    /**
+     * @param {object} setData //ユーザー情報や認証トークンなど
+     */
+    register: (setData) => {
+        userDispatcher.dispatch({ type: ActionType.REGISTER, setData: setData });
+    },
 };
+

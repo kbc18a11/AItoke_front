@@ -9,6 +9,7 @@ import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
+import { Redirect } from "react-router-dom";
 
 export default class Register extends Component {
 
@@ -158,9 +159,59 @@ export default class Register extends Component {
         }
     }
 
+    /**
+     * ユーザー登録の後のログイン
+     * @returns {boolean} //ログインができたかどうかの判定
+     */
     async requestLogin() {
-        
+        //リクエストボディ
+        const requestBody = {
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation,
+        }
+
+        //jwtトークン
+        let jwtToken;
+        try {
+            //ログインして、jwtトークンを取得
+            jwtToken = await (await axios.post(_URL + '/login', requestBody)).data.access_token;
+            //console.log(jwtToken);
+
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+
+        //ユーザーの情報
+        let userData;
+        try {
+            //ユーザー情報取得
+            userData = await (await axios.get(_URL + '/me',
+                { headers: { Authorization: `Bearer ${jwtToken}` } })).data;
+        } catch (error) {
+            console.log(error.response);
+            return false;
+        }
+
+        //userStoreにセットするユーザー情報
+        const setUserStoreData = {
+            nowLogin: true,
+            token: jwtToken,
+            userId: userData.id,
+            name: userData.name,
+            icon: userData.icon
+        }
+        actions.register(setUserStoreData);
+
+        console.log(userStore.userStatus);
+        console.log(userStore.nowLogin);
+        console.log(userStore.token);
+
+        return true;
     }
+
+
 
     /**
      * 登録ボタンを押したときに作動
@@ -172,13 +223,18 @@ export default class Register extends Component {
         }
 
         //ユーザー登録（/register）へリクエスト開始
-        //ユーザー登録は完了できたか？
-        if (await this.requestRegister()) {
+        //ユーザー登録は完了できたか？ && ログインは完了したか？
+        if (await this.requestRegister() && await this.requestLogin()) {
 
         }
     }
 
     render() {
+        //既にログインしてていたら、'/'に移動
+        if (userStore.nowLogin) {
+            return (<Redirect to="/" />);
+        }
+
         return (
             <Container>
                 <Row>

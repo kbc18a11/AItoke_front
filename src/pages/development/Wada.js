@@ -1,39 +1,57 @@
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MyMessageForm from '../../components/talk/MyMessageForm';
-import SpeechBubble from '../../components/talk/SpeechBubble';
-import TalkingLog from '../../components/talk/TalkingLog';
+import { actions } from '../../flux/user/userActions';
+import userStore from '../../flux/user/UserStore';
 
 export default class Wada extends Component {
     constructor(props) {
         super(props);
 
+        console.log(userStore.userStatus);
+        
         this.state = {
-            voiceText: '　',
-            log: { who: '', text: '' }
+            param: userStore.userStatus.name,
+            text: 'ã€€',
         }
 
+        this.setParam = this.setParam.bind(this);
+        this.setText = this.setText.bind(this);
+        this.setText = this.setText.bind(this);
+        this.clear = this.clear.bind(this);
     }
 
-    setVoice(text) {
-
-        this.setState({ voiceText: text});
+    setText(e) {
+        this.setState({ text: e.target.value });
     }
 
-    setLog(inLog) {
-        console.log(inLog);
+    setParam() {
+        actions.setName(this.state.text);
 
-        this.setState({ log: { who: inLog.who, text: inLog.text } });
+        this.setState({ param : userStore.userStatus.name});
+    }
+
+    clear() {
+        userStore.clearLocalStorage();
+    }
+
+    login() {
+        actions.changeLogin(true);
+    }
+
+    logout() {
+        actions.changeLogin(false);
     }
 
     render() {
+        
         return (
             <div>
-                <h1>{this.state.voiceText}</h1>
-                <MyMessageForm setVoice={e => this.setVoice(e)} setLog={e => this.setLog(e)} />
-                <SpeechBubble text={this.state.voiceText} />
-                <TalkingLog log={this.state.log} />
+                <h1>{this.state.param}</h1>
+                <textarea onChange={this.setText} />
+                <button onClick={this.setParam}>押す</button>
+                <button onClick={this.clear}>clear</button>
+                <button onClick={this.login}>ログイン</button>
+                <button onClick={this.logout}>ログアウト</button>
             </div>
         )
     }
