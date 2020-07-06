@@ -237,6 +237,7 @@ export default class Register extends Component {
             <Container>
                 <Row>
                     <Col md={{ span: 6, offset: 3 }}>
+                        <h1>ユーザー登録</h1>
                         <Form>
                             <InputText className="name" label="名前" type="text"
                                 placeholder="名前を入力" outPutErrotMeaagages={this.state.errorMessages.name}
