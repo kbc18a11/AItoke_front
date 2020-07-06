@@ -7,6 +7,7 @@ import Tsutsui from './pages/development/Tsutsui';
 import Nakagoshi from './pages/development/Nakagoshi';
 import Talking from './pages/appPages/Talking';
 import Register from './pages/appPages/Register';
+import Login from './pages/appPages/Login';
 import NavberState from './flux/user/userViwe/NavberState';
 
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/nakagoshi" component={Nakagoshi} />
             <Route path="/taking" component={Talking} />
             <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
           </Switch>
         </Router>
       </div>
