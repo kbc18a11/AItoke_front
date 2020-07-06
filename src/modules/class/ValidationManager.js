@@ -10,7 +10,7 @@ export default class ValidationManager {
 
     /**
          * バリデーションチェック
-         * @param {object} data //バリデーションの値
+         * @param {object} targetData //バリデーションの値
          * @param {object} rule //バリデーションのルール
          * @param {object} ruleTypeErrorMessages //エラーの種類ごとのエラーのメッセージ
          */
