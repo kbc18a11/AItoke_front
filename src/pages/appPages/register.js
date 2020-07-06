@@ -100,7 +100,8 @@ export default class Register extends Component {
 
         const validationManager = new ValidationManager();
         //新しいエラーを返す
-        errorMessagesCopy = validationManager.checkValidation(targetData, this.state.rules, this.state.ruleTypeErrorMessages);
+        errorMessagesCopy = validationManager.checkValidation(targetData, this.state.rules,
+            this.state.ruleTypeErrorMessages);
 
         //this.state.password_confirmationのバリデーション
         const resultObject = this.checktPassword_confirmation();
@@ -112,7 +113,7 @@ export default class Register extends Component {
         }
 
         //新しいエラーに変更
-        this.setState({ errorMessages: errorMessagesCopy })
+        this.setState({ errorMessages: errorMessagesCopy });
 
         //最終的にエラーがあったか？
         return validationManager.isError;
@@ -129,7 +130,6 @@ export default class Register extends Component {
             password: this.state.password,
             password_confirmation: this.state.password_confirmation,
         }
-
 
         //ユーザー登録APIにリクエスト
         try {
@@ -204,14 +204,12 @@ export default class Register extends Component {
         }
         actions.register(setUserStoreData);
 
-        console.log(userStore.userStatus);
-        console.log(userStore.nowLogin);
-        console.log(userStore.token);
+        //console.log(userStore.userStatus);
+        //console.log(userStore.nowLogin);
+        //console.log(userStore.token);
 
         return true;
     }
-
-
 
     /**
      * 登録ボタンを押したときに作動
@@ -222,10 +220,10 @@ export default class Register extends Component {
             return;
         }
 
-        //ユーザー登録（/register）へリクエスト開始
-        //ユーザー登録は完了できたか？ && ログインは完了したか？
-        if (await this.requestRegister() && await this.requestLogin()) {
-
+        //ユーザー登録（/register）は出来たか？
+        if (this.requestRegister()) {
+            //ログインを開始
+            this.requestLogin();
         }
     }
 
