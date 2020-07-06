@@ -75,10 +75,64 @@ export default class Login extends Component {
         return validationManager.isError;
     }
 
+    /**
+     * @returns {boolean} ログインができたかどうかの判定
+     */
+    async requestLogin() {
+        //リクエストボディ
+        const requestBody = {
+            email: this.state.email,
+            password: this.state.password,
+        }
+
+        //jwtトークン
+        let jwtToken;
+        try {
+            //ログインして、jwtトークンを取得
+            jwtToken = await (await axios.post(_URL + '/login', requestBody)).data.access_token;
+            //console.log(jwtToken);
+
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+
+        //ユーザーの情報
+        let userData;
+        try {
+            //ユーザー情報取得
+            userData = await (await axios.get(_URL + '/me',
+                { headers: { Authorization: `Bearer ${jwtToken}` } })).data;
+        } catch (error) {
+            console.log(error.response);
+            return false;
+        }
+
+        //userStoreにセットするユーザー情報
+        const setUserStoreData = {
+            nowLogin: true,
+            token: jwtToken,
+            userId: userData.id,
+            name: userData.name,
+            icon: userData.icon
+        }
+        actions.register(setUserStoreData);
+
+        //console.log(userStore.userStatus);
+        //console.log(userStore.nowLogin);
+        //console.log(userStore.token);
+
+        return true;
+    }
+
     async doSubmit() {
+        //エラーメッセージは存在するか？
         if (this.doValidation()) {
             return;
         }
+
+        //ログインを開始
+        this.requestLogin();
     }
 
     render() {
