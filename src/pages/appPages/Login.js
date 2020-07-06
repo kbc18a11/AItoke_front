@@ -136,6 +136,11 @@ export default class Login extends Component {
     }
 
     render() {
+        //既にログインしてていたら、'/'に移動
+        if (userStore.nowLogin) {
+            return (<Redirect to="/" />);
+        }
+
         return (
             <Container>
                 <Row>
