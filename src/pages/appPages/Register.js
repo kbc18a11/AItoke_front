@@ -168,7 +168,6 @@ export default class Register extends Component {
         const requestBody = {
             email: this.state.email,
             password: this.state.password,
-            password_confirmation: this.state.password_confirmation,
         }
 
         //jwtトークン
@@ -177,7 +176,6 @@ export default class Register extends Component {
             //ログインして、jwtトークンを取得
             jwtToken = await (await axios.post(_URL + '/login', requestBody)).data.access_token;
             //console.log(jwtToken);
-
         } catch (error) {
             console.log(error);
             return false;
