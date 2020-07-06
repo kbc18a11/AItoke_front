@@ -17,11 +17,28 @@ export default class Login extends Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            //fromの項目ごとのバリデーションルール
+            rules: {
+                email: 'required|email|max:255',
+                password: 'required|max:255'
+            },
+            //項目ごとのエラーメッセージ
+            errorMessages: {
+                email: [],
+                password: [],
+            },
+            //バリデーションルールごとのエラーメッセージ
+            ruleTypeErrorMessages: {
+                required: '必須項目です',
+                max: '255文字以下入力してください',
+                email: 'メールアドレスを入力してください'
+            },
         };
 
         this.setEmail = this.setEmail.bind(this);
         this.setPassword = this.setPassword.bind(this);
+        this.doSubmit = this.doSubmit.bind(this);
     }
 
     setEmail(e) {
@@ -32,6 +49,38 @@ export default class Login extends Component {
         this.setState({ password: e.target.value });
     }
 
+    /**
+     * 全てのバリデーションを実施する
+     * @returns {boolean} //バリデーションエラーの存在
+     */
+    doValidation() {
+        //checkValidationデータの対象
+        const targetData = {
+            email: this.state.email,
+            password: this.state.password,
+        };
+
+        //setState用にthis.state.errorMessagesをコピー
+        let errorMessagesCopy = Object.assign({}, this.state.errorMessages);
+
+        const validationManager = new ValidationManager();
+        //新しいエラーを返す
+        errorMessagesCopy = validationManager.checkValidation(targetData, this.state.rules,
+            this.state.ruleTypeErrorMessages);
+
+        //新しいエラーに変更
+        this.setState({ errorMessages: errorMessagesCopy });
+
+        //最終的にエラーがあったか？
+        return validationManager.isError;
+    }
+
+    async doSubmit() {
+        if (this.doValidation()) {
+            return;
+        }
+    }
+
     render() {
         return (
             <Container>
@@ -40,12 +89,12 @@ export default class Login extends Component {
                         <h1>ログイン</h1>
                         <Form>
                             <InputText className="email" label="メールアドレス" type="email"
-                                placeholder="メールアドレスを入力" outPutErrotMeaagages={''}
+                                placeholder="メールアドレスを入力" outPutErrotMeaagages={this.state.errorMessages.email}
                                 setValue={this.setEmail} />
                             <InputText className="password" label="パスワード" type="password"
-                                placeholder="パスワードを入力" outPutErrotMeaagages={''}
+                                placeholder="パスワードを入力" outPutErrotMeaagages={this.state.errorMessages.password}
                                 setValue={this.setPassword} />
-                            <Button variant="primary" onClick={this.doSubmit}>登録</Button>
+                            <Button variant="primary" onClick={this.doSubmit}>ログイン</Button>
                         </Form>
                     </Col>
                 </Row>
