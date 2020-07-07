@@ -9,7 +9,7 @@ import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
-import { Redirect } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 export default class Login extends Component {
     constructor(props) {
@@ -151,7 +151,9 @@ export default class Login extends Component {
     render() {
         //既にログインしてていたら、'/'に移動
         if (this.state.nowLogin) {
-            return (<Redirect to="/" />);
+            console.log('nowLogin');
+            //'/'にリダイレクト
+            this.props.history.replace("/");
         }
 
         return (
