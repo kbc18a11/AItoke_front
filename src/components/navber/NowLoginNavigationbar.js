@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserNavMenu from './UserNavMenu';
+import userStore from '../../flux/user/UserStore';
+import '../../css/userIcon.css';
+
 export default class NowLoginNavigationbar extends Component {
     render() {
         return (
@@ -12,7 +15,8 @@ export default class NowLoginNavigationbar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#link">Link</Nav.Link>
-                    <UserNavMenu/>
+                        <img id="userIcon" src={userStore.userStatus.icon} />
+                        <UserNavMenu />
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
