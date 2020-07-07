@@ -7,19 +7,15 @@ import userStore from '../../flux/user/UserStore';
 
 export default class UserNavMenu extends Component {
     render() {
-        //ドロップダウンメニューのcss
-        const style = {
-            backgroundImage: `url(${userStore.userStatus.icon})`
-        }
 
         return (
-                <NavDropdown title="" id="basic-nav-dropdown" style={style}>
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">ログアウト</NavDropdown.Item>
-                </NavDropdown>
+            <NavDropdown title="" id="basic-nav-dropdown" >
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">ログアウト</NavDropdown.Item>
+            </NavDropdown>
         )
     }
 }
