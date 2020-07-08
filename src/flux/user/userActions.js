@@ -2,7 +2,8 @@ import { userDispatcher } from './userDispatcher';
 
 export const ActionType = {
     REGISTER: 'REGISTER',
-    LOGIN: 'LOGIN'
+    LOGIN: 'LOGIN',
+    LOGOUT:'LOGOUT'
 };
 
 export const actions = {
@@ -10,7 +11,7 @@ export const actions = {
      * ログアウト
      */
     logout: () => {
-        userDispatcher.dispatch({ type: ActionType.CHANGE_LOGIN, nowlogin: true });
+        userDispatcher.dispatch({ type: ActionType.LOGOUT});
     },
 
     /**

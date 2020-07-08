@@ -2,10 +2,19 @@ import React, { Component } from 'react'
 import UserStore from '../../flux/user/UserStore';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import userStore from '../../flux/user/UserStore';
+import {actions} from '../../flux/user/userActions';
 
 
 export default class UserNavMenu extends Component {
+    /**
+     * ログアウト
+     */
+    doLogout() {
+        console.log('logout');
+        actions.logout();
+        this.props.history.push('/');
+    }
+
     render() {
 
         return (
@@ -14,7 +23,7 @@ export default class UserNavMenu extends Component {
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">ログアウト</NavDropdown.Item>
+                <NavDropdown.Item onClick={this.doLogout}>ログアウト</NavDropdown.Item>
             </NavDropdown>
         )
     }

@@ -48,8 +48,15 @@ class UserStore extends EventEmitter {
         this.emit('change');
     }
 
-    setNowLogin() {
-
+    /**
+     * ログアウト
+     */
+    logout() {
+        this.nowLogin = false;
+        //ローカルストレージを全てクリア
+        this.clearLocalStorage();
+        //ナビゲーションバーの状態を変更する
+        this.emit('change');
     }
 
     /**
@@ -68,9 +75,6 @@ class UserStore extends EventEmitter {
      */
     clearLocalStorage() {
         localStorage.clear();
-
-        //ナビゲーションバーの状態を変更する
-        this.emit('change');
     }
 
     /**
@@ -84,6 +88,9 @@ class UserStore extends EventEmitter {
         switch (action.type) {
             case ActionType.REGISTER:
                 this.registerAfterSetState(action.setData);
+                return;
+            case ActionType.LOGOUT:
+                this.logout();
                 return;
             default:
                 return;
