@@ -9,7 +9,7 @@ export default class NowLoginNavigationbar extends Component {
     render() {
         return (
             <Navbar bg="primary" expand="lg" variant="dark">
-                <Navbar.Brand href="#home">AIトーク！！</Navbar.Brand>
+                <Navbar.Brand href="/">AIトーク！！</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
