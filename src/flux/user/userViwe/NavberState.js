@@ -4,21 +4,35 @@ import NowLoginNavigationbar from '../../../components/navber/NowLoginNavigation
 import userStore from '../UserStore';
 
 export default class NavberState extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            nowLogin: userStore.nowLogin
+        }
+    }
+
 
     /**
      * ログインの状態によって、ナビゲーションバーを変更
-     * @param {boolean} nowLogin ログインの状態
+     * @returns {JSX} ログインの状態の状態に応じたコンポーネントを返す
      */
-    isNowLogin(nowLogin) {
-        //console.log(typeof(nowLogin));
-        //console.log(nowLogin);
-        
+    isNowLogin() {
         //ログインしているか？
-        if (nowLogin) {
+        if (this.state.nowLogin) {
             return (<NowLoginNavigationbar />);
         }
 
         return (<DefaultNavigationbar />);
+    }
+
+    componentWillMount() {
+        console.log(userStore.nowLogin);
+
+        //registerAfterSetStateが実行されたら、this.nowLoginをuserStore.nowLoginの変更に応じたものにする
+        userStore.on('change', () => {
+            this.setState({ nowLogin: userStore.nowLogin });
+        });
     }
 
     render() {

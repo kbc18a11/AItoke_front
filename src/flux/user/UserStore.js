@@ -1,9 +1,11 @@
 import { userDispatcher } from './userDispatcher';
 import { ActionType } from './userActions';
+import { EventEmitter } from "events";
 
-
-class UserStore {
+class UserStore extends EventEmitter {
     constructor() {
+        super();
+
         //常用するユーザーの情報
         this.userStatus = {
             userId: Number(localStorage.getItem('userId')),
@@ -42,6 +44,12 @@ class UserStore {
         this.userStatus.icon = setData.icon;
         this.setLocalStorage('icon', this.userStatus.icon);
 
+        //ナビゲーションバーの状態を変更する
+        this.emit('change');
+    }
+
+    setNowLogin() {
+
     }
 
     /**
@@ -60,6 +68,9 @@ class UserStore {
      */
     clearLocalStorage() {
         localStorage.clear();
+
+        //ナビゲーションバーの状態を変更する
+        this.emit('change');
     }
 
     /**
@@ -73,11 +84,6 @@ class UserStore {
         switch (action.type) {
             case ActionType.REGISTER:
                 this.registerAfterSetState(action.setData);
-                return;
-
-            //userStatus.nowLoginに対するアクション
-            case ActionType.CHANGE_LOGIN:
-                this.setNowLogin(action.nowLogin);
                 return;
             default:
                 return;

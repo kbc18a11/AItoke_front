@@ -18,8 +18,6 @@ export default class Register extends Component {
 
         //hogehogeNumber -> errorMessagesの格納場所
         this.state = {
-            //現在のログインの状態
-            nowLogin: userStore.nowLogin,
             name: '',
             email: '',
             password: '',
@@ -193,8 +191,6 @@ export default class Register extends Component {
             console.log(error.response);
             return false;
         }
-        //ログインの状態を変更
-        this.setState({ nowLogin: true });
 
         //userStoreにセットするユーザー情報
         const setUserStoreData = {
@@ -231,8 +227,7 @@ export default class Register extends Component {
 
     render() {
         //既にログインしてていたら、'/'に移動
-        if (this.state.nowLogin) {
-            console.log(this.state.nowLogin);
+        if (userStore.nowLogin) {
             return (<Redirect to="/" />);
         }
 

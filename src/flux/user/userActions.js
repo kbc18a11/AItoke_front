@@ -1,5 +1,4 @@
 import { userDispatcher } from './userDispatcher';
-import userStore from './UserStore';
 
 export const ActionType = {
     REGISTER: 'REGISTER',
