@@ -16,6 +16,7 @@ export default class Register extends Component {
     constructor(props) {
         super(props);
 
+        //hogehogeNumber -> errorMessagesの格納場所
         this.state = {
             //現在のログインの状態
             nowLogin: userStore.nowLogin,
