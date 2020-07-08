@@ -18,6 +18,8 @@ export default class Register extends Component {
 
         //hogehogeNumber -> errorMessagesの格納場所
         this.state = {
+            //現在のログインの状態
+            nowLogin: userStore.nowLogin,
             name: '',
             email: '',
             password: '',
@@ -177,7 +179,7 @@ export default class Register extends Component {
             jwtToken = await (await axios.post(_URL + '/login', requestBody)).data.access_token;
             //console.log(jwtToken);
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
             return false;
         }
 
@@ -218,16 +220,16 @@ export default class Register extends Component {
             return;
         }
 
-        //ユーザー登録（/register）は出来たか？
-        if (this.requestRegister()) {
-            //ログインを開始
-            this.requestLogin();
+        //ユーザー登録（/register）は出来たか？ && ログインは出来たか？
+        if (this.requestRegister() && this.requestLogin()) {
+            //ログインの状態を変更
+            this.setState({ nowLogin: true });
         }
     }
 
     render() {
         //既にログインしてていたら、'/'に移動
-        if (userStore.nowLogin) {
+        if (this.state.nowLogin) {
             return (<Redirect to="/" />);
         }
 

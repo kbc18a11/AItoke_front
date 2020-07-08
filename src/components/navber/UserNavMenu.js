@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import UserStore from '../../flux/user/UserStore';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {actions} from '../../flux/user/userActions';
-
+import { actions } from '../../flux/user/userActions';
+import history from 'history/createBrowserHistory';
 
 export default class UserNavMenu extends Component {
     /**
@@ -12,7 +11,8 @@ export default class UserNavMenu extends Component {
     doLogout() {
         console.log('logout');
         actions.logout();
-        this.props.history.push('/');
+        //"/"へ遷移
+        history().push('/');
     }
 
     render() {
