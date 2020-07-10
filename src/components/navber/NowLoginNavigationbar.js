@@ -15,7 +15,7 @@ export default class NowLoginNavigationbar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#link">Link</Nav.Link>
-                        <img id="userIcon" src={userStore.userStatus.icon} />
+                        <img id="userIcon" src={'https://aitoke.s3-ap-northeast-1.amazonaws.com/' + userStore.userStatus.icon} />
                         <UserNavMenu />
                     </Nav>
                     <Form inline>
