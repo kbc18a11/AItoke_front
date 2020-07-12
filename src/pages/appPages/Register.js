@@ -142,20 +142,24 @@ export default class Register extends Component {
                 return true;
             }
         } catch (error) {
-            //console.log(error.response);
+            console.log(error.response);
+            const status = error.response.status;
             const errorMessages = error.response.data.error;
 
             //バリデーションによるユーザー登録ができなかった場合
-            if (!errorMessages.createResult) {
+            if (status === 422) {
                 //メールアドレスのバリデーションエラーか？
                 if (errorMessages.email) {
                     //エラーメッセージを格納
                     const errorMessagesCopy = Object.assign({}, this.state.errorMessages);
                     errorMessagesCopy.email = errorMessages.email;
                     this.setState({ errorMessages: errorMessagesCopy });
+                    return false;
                 }
             }
 
+            alert('サーバー側でエラーが発声しました');
+            
             return false;
         }
 
@@ -201,7 +205,7 @@ export default class Register extends Component {
             token: jwtToken,
             userId: userData.id,
             name: userData.name,
-            email:userData.email,
+            email: userData.email,
             icon: userData.icon
         }
 
@@ -224,7 +228,7 @@ export default class Register extends Component {
         }
 
         //ユーザー登録（/register）は出来たか？ && ログインは出来たか？
-        if (this.requestRegister() && this.requestLogin()) {
+        if (await this.requestRegister() && await this.requestLogin()) {
             //ログインの状態を変更
             this.setState({ nowLogin: true });
         }

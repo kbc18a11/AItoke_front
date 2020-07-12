@@ -143,7 +143,7 @@ export default class Login extends Component {
         }
 
         //ログインは出来たか？
-        if (this.requestLogin()) {
+        if (await this.requestLogin()) {
             //ログインの状態をログイン済みに変更
             this.setState({ nowLogin: true });
         }
