@@ -36,7 +36,8 @@ export default class InputText extends Component {
         return (
             <Form.Group>
                 <Form.Label>{this.state.label}</Form.Label>
-                <Form.Control type={this.state.type} placeholder={this.state.placeholder} onChange={this.state.setValue} />
+                <Form.Control type={this.state.type} placeholder={this.state.placeholder}
+                    onChange={this.state.setValue} value={this.props.value} />
                 <Form.Text className="error">{this.state.outPutErrotMeaagages.toString()}</Form.Text>
             </Form.Group>
         )
