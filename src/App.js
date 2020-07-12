@@ -9,6 +9,7 @@ import Talking from './pages/appPages/Talking';
 import Register from './pages/appPages/Register';
 import Login from './pages/appPages/Login';
 import NavberState from './flux/user/userViwe/NavberState';
+import userUpdate from './pages/appPages/userUpdate';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/taking" component={Talking} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/userupdate" component={userUpdate} />
           </Switch>
         </Router>
       </div>
