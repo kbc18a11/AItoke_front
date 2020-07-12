@@ -10,6 +10,7 @@ class UserStore extends EventEmitter {
         this.userStatus = {
             userId: Number(localStorage.getItem('userId')),
             name: localStorage.getItem('name'),
+            email: localStorage.getItem('email'),
             icon: localStorage.getItem('icon'),
         };
 
@@ -35,6 +36,9 @@ class UserStore extends EventEmitter {
         //ユーザーid
         this.userStatus.userId = setData.userId;
         this.setLocalStorage('userId', this.userStatus.userId);
+
+        this.userStatus.email = setData.email
+        this.setLocalStorage('email', this.userStatus.email);
 
         //ユーザーの名前
         this.userStatus.name = setData.name;
