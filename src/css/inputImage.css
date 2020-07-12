@@ -1,0 +1,7 @@
+.imageFile {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+  margin-right: 5px;
+}
