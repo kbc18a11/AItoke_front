@@ -141,7 +141,6 @@ export default class Register extends Component {
             if (createResult) {
                 return true;
             }
-
         } catch (error) {
             //console.log(error.response);
             const errorMessages = error.response.data.error;
@@ -159,6 +158,8 @@ export default class Register extends Component {
 
             return false;
         }
+
+        return false;
     }
 
     /**
@@ -200,8 +201,10 @@ export default class Register extends Component {
             token: jwtToken,
             userId: userData.id,
             name: userData.name,
+            email:userData.email,
             icon: userData.icon
         }
+
         actions.register(setUserStoreData);
 
         //console.log(userStore.userStatus);
