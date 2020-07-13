@@ -24,7 +24,6 @@ export default class userUpdate extends Component {
             rules: {
                 name: 'required|max:255',
                 email: 'required|email|max:255',
-                icon: 'required|image'
             },
             //項目ごとのエラーメッセージ
             errorMessages: {
@@ -36,7 +35,6 @@ export default class userUpdate extends Component {
             ruleTypeErrorMessages: {
                 required: '必須項目です',
                 max: '255文字以下入力してください',
-                min: '8文字以上入力してください',
                 email: 'メールアドレスを入力してください',
                 image: '画像を選択してください'
             },
@@ -61,13 +59,42 @@ export default class userUpdate extends Component {
         this.setState({ icon: files[0] });
     }
 
-    doSubmit() {
+    /**
+     * 全てのバリデーションを実施する
+     * @returns {boolean} //バリデーションエラーの存在
+     */
+    doValidation() {
+        //checkValidationデータの対象
+        const targetData = {
+            name: this.state.name,
+            email: this.state.email,
+            icon: this.state.icon
+        };
 
+        //setState用にthis.state.errorMessagesをコピー
+        let errorMessagesCopy = Object.assign({}, this.state.errorMessages);
+
+        const validationManager = new ValidationManager();
+        //新しいエラーを返す
+        errorMessagesCopy = validationManager.checkValidation(targetData, this.state.rules,
+            this.state.ruleTypeErrorMessages);
+
+        //新しいエラーに変更
+        this.setState({ errorMessages: errorMessagesCopy });
+
+        //最終的にエラーがあったか？
+        return validationManager.isError;
+    }
+
+    doSubmit() {
+        if (this.doValidation()) {
+            return;
+        }
     }
 
     render() {
         console.log(this.state.icon);
-        
+
         return (
             <Container>
                 <Row>
@@ -81,7 +108,7 @@ export default class userUpdate extends Component {
                                 placeholder="メールアドレスを入力" outPutErrotMeaagages={this.state.errorMessages.email}
                                 setValue={this.setEmail} value={this.state.email} />
                             <InputImage className="icon" label="アイコン画像"
-                                outPutErrotMeaagages={this.state.errorMessages.email}
+                                outPutErrotMeaagages={this.state.errorMessages.icon}
                                 setValue={this.setIcon} image={this.state.icon} />
                             <Button variant="primary" onClick={this.doSubmit}>登録</Button>
                         </Form>
