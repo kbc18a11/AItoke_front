@@ -118,7 +118,7 @@ export default class userUpdate extends Component {
         } catch (error) {
             console.log(error.response);
 
-            //エラーステータスは422か？
+            //エラーステータスは422か？(バリデーションエラー)
             if (error.response.status === 422) {
                 //エラーメッセージを格納
                 const errorMessagesCopy = Object.assign({}, this.state.errorMessages);
@@ -130,6 +130,14 @@ export default class userUpdate extends Component {
                 this.setState({ errorMessages: errorMessagesCopy });
                 return false;
             }
+
+            //エラーステータスは401か？(トークンの期限切れ)
+            if (error.response.status === 401) {
+                console.log('Expired token');
+                return false;
+            }
+
+            alert('サーバー側でエラーが発生しました');
             return false;
         }
 
