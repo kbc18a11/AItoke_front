@@ -158,7 +158,7 @@ export default class Register extends Component {
                 }
             }
 
-            alert('サーバー側でエラーが発声しました');
+            alert('サーバー側でエラーが発生しました');
             
             return false;
         }
