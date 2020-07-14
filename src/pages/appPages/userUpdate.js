@@ -19,7 +19,10 @@ export default class userUpdate extends Component {
         this.state = {
             name: userStore.userStatus.name,
             email: userStore.userStatus.email,
-            icon: 'https://aitoke.s3-ap-northeast-1.amazonaws.com/' + userStore.userStatus.icon,
+            //アイコンのURL
+            iconURL: 'https://aitoke.s3-ap-northeast-1.amazonaws.com/' + userStore.userStatus.icon,
+            //アップロードするアイコンファイル
+            iconFile: null,
             //fromの項目ごとのバリデーションルール
             rules: {
                 name: 'required|max:255',
@@ -56,7 +59,7 @@ export default class userUpdate extends Component {
 
     setIcon(files) {
         console.log(files);
-        this.setState({ icon: files[0] });
+        this.setState({ iconFile: files[0] });
     }
 
     /**
@@ -68,7 +71,6 @@ export default class userUpdate extends Component {
         const targetData = {
             name: this.state.name,
             email: this.state.email,
-            icon: this.state.icon
         };
 
         //setState用にthis.state.errorMessagesをコピー
@@ -86,15 +88,68 @@ export default class userUpdate extends Component {
         return validationManager.isError;
     }
 
-    doSubmit() {
+    async requestUpdate() {
+        const formData = new FormData();
+        formData.append('name', this.state.name);
+        formData.append('email', this.state.email);
+        formData.append('icon', this.state.iconFile);
+
+        //リクエストボディ
+        const requestBody = {
+            name: this.state.name,
+            email: this.state.email,
+        };
+
+        //アップロードするアイコン画像は存在するか？
+        if (this.state.iconFile) {
+            requestBody.icon = this.state.iconFile;
+        }
+        
+        //{ headers: { Authorization: `Bearer ${userStore.token}` } }
+        try {
+            //ヘッダーを設定
+            axios.defaults.headers.common = {
+                'content-type': 'multipart/form-data',
+                Authorization: `Bearer ${userStore.token}`
+            };
+            //通信開始
+            await (await axios.put(_URL + `/user/${userStore.userStatus.userId}`,
+                requestBody));
+        } catch (error) {
+            console.log(error.response);
+
+            //エラーステータスは422か？
+            if (error.response.status === 422) {
+                //エラーメッセージを格納
+                const errorMessagesCopy = Object.assign({}, this.state.errorMessages);
+
+                const errorMessages = error.response.data.error;
+                errorMessagesCopy.email = errorMessages.email;
+                errorMessagesCopy.icon = errorMessages.icon;
+
+                this.setState({ errorMessages: errorMessagesCopy });
+                return false;
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+
+    async doSubmit() {
+        //バリデーションは問題なかったか？
         if (this.doValidation()) {
+            return;
+        }
+
+        //更新はできたか？
+        if (this.requestUpdate()) {
             return;
         }
     }
 
     render() {
-        console.log(this.state.icon);
-
         return (
             <Container>
                 <Row>
@@ -109,7 +164,7 @@ export default class userUpdate extends Component {
                                 setValue={this.setEmail} value={this.state.email} />
                             <InputImage className="icon" label="アイコン画像"
                                 outPutErrotMeaagages={this.state.errorMessages.icon}
-                                setValue={this.setIcon} image={this.state.icon} />
+                                setValue={this.setIcon} image={this.state.iconURL} />
                             <Button variant="primary" onClick={this.doSubmit}>登録</Button>
                         </Form>
                     </Col>
