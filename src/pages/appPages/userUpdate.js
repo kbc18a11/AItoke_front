@@ -41,6 +41,9 @@ export default class userUpdate extends Component {
                 email: 'メールアドレスを入力してください',
                 image: '画像を選択してください'
             },
+            //リダイレクト先
+            //ログインしていたら、初期状態ではリダイレクトしない
+            redirectTo: userStore.nowLogin ? '' : '/login',
         }
 
         this.setName = this.setName.bind(this);
@@ -136,6 +139,7 @@ export default class userUpdate extends Component {
             //エラーステータスは401か？(トークンの期限切れ)
             if (error.response.status === 401) {
                 console.log('Expired token');
+                this.setState({ redirectTo: '/login' });
                 return false;
             }
 
@@ -160,6 +164,11 @@ export default class userUpdate extends Component {
     }
 
     render() {
+        //リダイレクトするか？
+        if (this.state.redirectTo) {
+            return (<Redirect to={this.state.redirectTo} />);
+        }
+
         return (
             <Container>
                 <Row>
