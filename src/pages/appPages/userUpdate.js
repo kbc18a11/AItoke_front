@@ -155,6 +155,10 @@ export default class userUpdate extends Component {
         return true;
     }
 
+    /**
+     * 新しいユーザー情報をuserStoreに登録する
+     * @returns {boolean} 新しいユーザー情報をuserStoreに登録したか？
+     */
     async setNewUserStatus() {
         //ユーザーの情報
         let userData;
