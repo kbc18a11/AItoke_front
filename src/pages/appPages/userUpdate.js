@@ -11,6 +11,8 @@ import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
 import { Redirect } from "react-router-dom";
+import Logout from './Logout';
+
 
 export default class userUpdate extends Component {
     constructor(props) {
@@ -139,7 +141,7 @@ export default class userUpdate extends Component {
             //エラーステータスは401か？(トークンの期限切れ)
             if (error.response.status === 401) {
                 console.log('Expired token');
-                this.setState({ redirectTo: '/login' });
+                this.setState({ redirectTo: '/logout' });
                 return false;
             }
 
@@ -166,6 +168,11 @@ export default class userUpdate extends Component {
     render() {
         //リダイレクトするか？
         if (this.state.redirectTo) {
+            //ログアウトの場合
+            if (this.state.redirectTo === '/logout') {
+                return (<Logout goTo='/login' />);
+            }
+
             return (<Redirect to={this.state.redirectTo} />);
         }
 
