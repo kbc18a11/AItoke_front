@@ -93,6 +93,9 @@ export default class userUpdate extends Component {
         return validationManager.isError;
     }
 
+    /**
+     * @returns {boolean} ユーザー情報の更新に成功したかどうか？
+     */
     async requestUpdate() {
         const formData = new FormData();
         formData.append('name', this.state.name);
@@ -152,6 +155,7 @@ export default class userUpdate extends Component {
         return true;
     }
 
+    
 
     async doSubmit() {
         //バリデーションは問題なかったか？
