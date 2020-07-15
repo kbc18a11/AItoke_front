@@ -10,6 +10,7 @@ import Register from './pages/appPages/Register';
 import Login from './pages/appPages/Login';
 import NavberState from './flux/user/userViwe/NavberState';
 import userUpdate from './pages/appPages/userUpdate';
+import Logout from './pages/appPages/Logout';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/userupdate" component={userUpdate} />
+            <Route path="/logout" component={Logout} />
           </Switch>
         </Router>
       </div>
