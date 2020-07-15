@@ -92,7 +92,6 @@ export default class userUpdate extends Component {
         const formData = new FormData();
         formData.append('name', this.state.name);
         formData.append('email', this.state.email);
-        formData.append('icon', this.state.iconFile);
 
         //リクエストボディ
         const requestBody = {
@@ -102,19 +101,22 @@ export default class userUpdate extends Component {
 
         //アップロードするアイコン画像は存在するか？
         if (this.state.iconFile) {
-            requestBody.icon = this.state.iconFile;
+            formData.append('icon', this.state.iconFile);
+            //requestBody.icon = this.state.iconFile;
         }
-        
+
+        //console.log(...formData.entries());
+
         //{ headers: { Authorization: `Bearer ${userStore.token}` } }
         try {
             //ヘッダーを設定
             axios.defaults.headers.common = {
-                'content-type': 'multipart/form-data',
+                'X-HTTP-Method-Override': 'PUT',
                 Authorization: `Bearer ${userStore.token}`
             };
             //通信開始
-            await (await axios.put(_URL + `/user/${userStore.userStatus.userId}`,
-                requestBody));
+            await (await axios.post(_URL + `/user/${userStore.userStatus.userId}`,
+                formData));
         } catch (error) {
             console.log(error.response);
 
