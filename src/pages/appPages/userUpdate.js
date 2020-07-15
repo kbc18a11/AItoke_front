@@ -155,7 +155,44 @@ export default class userUpdate extends Component {
         return true;
     }
 
-    
+    async setNewUserStatus() {
+        //ユーザーの情報
+        let userData;
+        try {
+            //ユーザー情報取得
+            userData = await (await axios.get(_URL + '/me',
+                { headers: { Authorization: `Bearer ${userStore.token}` } })).data;
+        } catch (error) {
+            console.log(error.response);
+
+            //エラーステータスは401か？(トークンの期限切れ)
+            if (error.response.status === 401) {
+                console.log('Expired token');
+                this.setState({ redirectTo: '/logout' });
+                return false;
+            }
+
+            return false;
+        }
+
+        //userStoreにセットするユーザー情報
+        const setUserStoreData = {
+            nowLogin: userStore.nowLogin,
+            token: userStore.token,
+            userId: userData.id,
+            name: userData.name,
+            email: userData.email,
+            icon: userData.icon
+        }
+
+        actions.register(setUserStoreData);
+
+        //console.log(userStore.userStatus);
+        //console.log(userStore.nowLogin);
+        //console.log(userStore.token);
+
+        return true;
+    }
 
     async doSubmit() {
         //バリデーションは問題なかったか？
@@ -163,8 +200,9 @@ export default class userUpdate extends Component {
             return;
         }
 
-        //更新はできたか？
-        if (this.requestUpdate()) {
+        //更新はできたか？ && 新しいユーザー情報をuserStoreに登録したか？
+        if (await this.requestUpdate() && this.setNewUserStatus()) {
+            this.setState({ redirectTo: '/' });
             return;
         }
     }
