@@ -170,7 +170,7 @@ export default class userUpdate extends Component {
         if (this.state.redirectTo) {
             //ログアウトの場合
             if (this.state.redirectTo === '/logout') {
-                return (<Logout goTo='/login' />);
+                return (<Logout goTo="/login" />);
             }
 
             return (<Redirect to={this.state.redirectTo} />);
