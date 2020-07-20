@@ -11,6 +11,7 @@ import Login from './pages/appPages/Login';
 import NavberState from './flux/user/userViwe/NavberState';
 import userUpdate from './pages/appPages/userUpdate';
 import Logout from './pages/appPages/Logout';
+import CreateAiModel from './pages/appPages/CreateAiModel';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/userupdate" component={userUpdate} />
             <Route path="/logout" component={Logout} />
+            <Route path="/aimodel/create" component={CreateAiModel} />
           </Switch>
         </Router>
       </div>
