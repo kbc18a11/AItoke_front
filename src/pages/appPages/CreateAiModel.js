@@ -24,13 +24,27 @@ export default class CreateAiModel extends Component {
             opne_mouth_image: null,
             close_mouth_image: null,
 
-            errorMessages: {
-                name: '',
-                self_introduction: '',
-                opne_mouth_image: null,
-                close_mouth_image: null
+            //項目ごとのバリエーションルール
+            rules: {
+                name: 'required|max:255',
+                self_introduction: 'max:255',
+                opne_mouth_image: 'required',
+                close_mouth_image: 'required'
             },
 
+            //項目ごとのエラーメッセージ
+            errorMessages: {
+                name: [],
+                self_introduction: [],
+                opne_mouth_image: [],
+                close_mouth_image: []
+            },
+
+            //バリデーションルールごとのエラーメッセージ
+            ruleTypeErrorMessages: {
+                required: '必須項目です',
+                max: '255文字以下入力してください',
+            },
         }
 
         this.setName = this.setName.bind(this);
@@ -56,8 +70,41 @@ export default class CreateAiModel extends Component {
         this.setState({ close_mouth_image: file[0] });
     }
 
-    doSubmit() {
+    /**
+     * バリデーションの実行
+     * @returns {boolean} バリエーションエラーの存在
+     */
+    doValidation() {
+        //setState用にthis.state.errorMessagesをコピー
+        let errorMessagesCopy = Object.assign({}, this.state.errorMessages);
 
+        const validationManager = new ValidationManager();
+
+        //checkValidationデータの対象
+        const targetData = {
+            name: this.state.name,
+            self_introduction: this.state.self_introduction,
+            opne_mouth_image: this.state.opne_mouth_image,
+            close_mouth_image: this.state.close_mouth_image
+        };
+        //新しいエラーを返す
+        errorMessagesCopy = validationManager.checkValidation(targetData, this.state.rules,
+            this.state.ruleTypeErrorMessages);
+
+        //新しいエラーに変更
+        this.setState({ errorMessages: errorMessagesCopy });
+
+        //最終的にエラーがあったか？
+        return validationManager.isError;
+    }
+
+    
+
+
+    doSubmit() {
+        if (this.doValidation()) {
+
+        }
     }
 
     render() {
@@ -70,13 +117,13 @@ export default class CreateAiModel extends Component {
                             placeholder="名前を入力" outPutErrotMeaagages={this.state.errorMessages.name}
                             setValue={this.setName} value={this.state.name} />
                         <Textarea className="self_introduction" label="自己紹介文" type="text"
-                            placeholder="自己紹介を入力" outPutErrotMeaagages={this.state.errorMessages.name}
+                            placeholder="自己紹介を入力" outPutErrotMeaagages={this.state.errorMessages.self_introduction}
                             setValue={this.setSelf_introduction} value={this.state.self_introduction} />
                         <InputImage className="opne_mouth_image" label="口を開けた画像"
-                            outPutErrotMeaagages={this.state.errorMessages.name}
+                            outPutErrotMeaagages={this.state.errorMessages.opne_mouth_image}
                             setValue={this.setOpne_mouth_image} />
                         <InputImage className="close_mouth_image" label="口を閉じた画像"
-                            outPutErrotMeaagages={this.state.errorMessages.name}
+                            outPutErrotMeaagages={this.state.errorMessages.close_mouth_image}
                             setValue={this.setClose_mouth_image} />
                         <Button variant="primary" onClick={this.doSubmit}>登録</Button>
                     </Form>
