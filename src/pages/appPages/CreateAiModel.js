@@ -21,14 +21,14 @@ export default class CreateAiModel extends Component {
         this.state = {
             name: '',
             self_introduction: '',
-            opne_mouth_image: null,
+            open_mouth_image: null,
             close_mouth_image: null,
 
             //項目ごとのバリエーションルール
             rules: {
                 name: 'required|max:255',
                 self_introduction: 'max:255',
-                opne_mouth_image: 'required',
+                open_mouth_image: 'required',
                 close_mouth_image: 'required'
             },
 
@@ -36,7 +36,7 @@ export default class CreateAiModel extends Component {
             errorMessages: {
                 name: [],
                 self_introduction: [],
-                opne_mouth_image: [],
+                open_mouth_image: [],
                 close_mouth_image: []
             },
 
@@ -49,7 +49,7 @@ export default class CreateAiModel extends Component {
 
         this.setName = this.setName.bind(this);
         this.setSelf_introduction = this.setSelf_introduction.bind(this);
-        this.setOpne_mouth_image = this.setOpne_mouth_image.bind(this);
+        this.setopen_mouth_image = this.setopen_mouth_image.bind(this);
         this.setClose_mouth_image = this.setClose_mouth_image.bind(this);
         this.doSubmit = this.doSubmit.bind(this);
     }
@@ -62,8 +62,8 @@ export default class CreateAiModel extends Component {
         this.setState({ self_introduction: e.target.value });
     }
 
-    setOpne_mouth_image(file) {
-        this.setState({ opne_mouth_image: file[0] });
+    setopen_mouth_image(file) {
+        this.setState({ open_mouth_image: file[0] });
     }
 
     setClose_mouth_image(file) {
@@ -84,7 +84,7 @@ export default class CreateAiModel extends Component {
         const targetData = {
             name: this.state.name,
             self_introduction: this.state.self_introduction,
-            opne_mouth_image: this.state.opne_mouth_image,
+            open_mouth_image: this.state.open_mouth_image,
             close_mouth_image: this.state.close_mouth_image
         };
         //新しいエラーを返す
@@ -98,13 +98,39 @@ export default class CreateAiModel extends Component {
         return validationManager.isError;
     }
 
-    
+    async requestCreate() {
+        //リクエストボディの構築
+        const formData = new FormData();
+        formData.append('name', this.state.name);
+        formData.append('self_introduction', this.state.self_introduction);
+        formData.append('open_mouth_image', this.state.open_mouth_image);
+        formData.append('close_mouth_image', this.state.close_mouth_image);
+
+        try {
+            //ヘッダーを設定
+            axios.defaults.headers.common = {
+                Authorization: `Bearer ${userStore.token}`
+            };
+            //通信開始
+            await (await axios.post(_URL + '/aimodel',
+                formData));
+            
+            return true;
+        } catch (error) {
+            console.log(error.response);
+
+            
+        }
+    }
 
 
     doSubmit() {
+        //バリエーションに問題があったか？
         if (this.doValidation()) {
-
+            return
         }
+
+        this.requestCreate();
     }
 
     render() {
@@ -119,9 +145,9 @@ export default class CreateAiModel extends Component {
                         <Textarea className="self_introduction" label="自己紹介文" type="text"
                             placeholder="自己紹介を入力" outPutErrotMeaagages={this.state.errorMessages.self_introduction}
                             setValue={this.setSelf_introduction} value={this.state.self_introduction} />
-                        <InputImage className="opne_mouth_image" label="口を開けた画像"
-                            outPutErrotMeaagages={this.state.errorMessages.opne_mouth_image}
-                            setValue={this.setOpne_mouth_image} />
+                        <InputImage className="open_mouth_image" label="口を開けた画像"
+                            outPutErrotMeaagages={this.state.errorMessages.open_mouth_image}
+                            setValue={this.setopen_mouth_image} />
                         <InputImage className="close_mouth_image" label="口を閉じた画像"
                             outPutErrotMeaagages={this.state.errorMessages.close_mouth_image}
                             setValue={this.setClose_mouth_image} />
