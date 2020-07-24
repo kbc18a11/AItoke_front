@@ -141,14 +141,14 @@ export default class CreateAiModel extends Component {
     }
 
 
-    doSubmit() {
+    async doSubmit() {
         //バリエーションに問題があったか？
         if (this.doValidation()) {
             return
         }
 
         //AIモデルは作れたか？
-        if (this.requestCreate()) {
+        if (await this.requestCreate()) {
             this.setState({ redirectTo: `/userl/${userStore.userStatus.userId}/aimode` });
 
             return;
