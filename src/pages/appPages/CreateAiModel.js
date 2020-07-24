@@ -118,7 +118,7 @@ export default class CreateAiModel extends Component {
             //通信開始
             await (await axios.post(_URL + '/aimodel',
                 formData));
-            
+
             return true;
         } catch (error) {
             console.log(error.response);
@@ -147,7 +147,12 @@ export default class CreateAiModel extends Component {
             return
         }
 
-        this.requestCreate();
+        //AIモデルは作れたか？
+        if (this.requestCreate()) {
+            this.setState({ redirectTo: `/userl/${userStore.userStatus.userId}/aimode` });
+
+            return;
+        }
     }
 
     render() {
@@ -159,7 +164,7 @@ export default class CreateAiModel extends Component {
         return (
             <Container>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <h1>AIキャラクター新規登録</h1>
+                    <h1>AIモデル新規登録</h1>
                     <Form>
                         <InputText className="name" label="キャラクターネーム" type="text"
                             placeholder="名前を入力" outPutErrotMeaagages={this.state.errorMessages.name}
