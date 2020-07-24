@@ -45,6 +45,10 @@ export default class CreateAiModel extends Component {
                 required: '必須項目です',
                 max: '255文字以下入力してください',
             },
+
+            //リダイレクト先
+            //ログインしていたら、初期状態ではリダイレクトしない
+            redirectTo: userStore.nowLogin ? '' : '/login',
         }
 
         this.setName = this.setName.bind(this);
@@ -119,7 +123,20 @@ export default class CreateAiModel extends Component {
         } catch (error) {
             console.log(error.response);
 
-            
+            //エラーステータスは422か？(バリデーションエラー)
+            if (error.response.status === 422) {
+                //エラーメッセージを格納
+                this.setState({ errorMessages: error.response.data.error });
+                return false;
+            }
+
+
+            //エラーステータスは401か？(未ログイン,トークンの期限切れ)
+            if (error.response.status === 401) {
+                //エラーメッセージを格納
+                this.setState({ redirectTo: '/logout' });
+                return false;
+            }
         }
     }
 
@@ -134,6 +151,11 @@ export default class CreateAiModel extends Component {
     }
 
     render() {
+        //リダイレクトするか？
+        if (this.state.redirectTo) {
+            return (<Redirect to={this.state.redirectTo} />);
+        }
+
         return (
             <Container>
                 <Col md={{ span: 6, offset: 3 }}>
