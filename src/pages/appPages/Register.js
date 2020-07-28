@@ -18,8 +18,6 @@ export default class Register extends Component {
 
         //hogehogeNumber -> errorMessagesの格納場所
         this.state = {
-            //現在のログインの状態
-            nowLogin: userStore.nowLogin,
             name: '',
             email: '',
             password: '',
@@ -141,29 +139,24 @@ export default class Register extends Component {
             if (createResult) {
                 return true;
             }
+
         } catch (error) {
-            console.log(error.response);
-            const status = error.response.status;
+            //console.log(error.response);
             const errorMessages = error.response.data.error;
 
             //バリデーションによるユーザー登録ができなかった場合
-            if (status === 422) {
+            if (!errorMessages.createResult) {
                 //メールアドレスのバリデーションエラーか？
                 if (errorMessages.email) {
                     //エラーメッセージを格納
                     const errorMessagesCopy = Object.assign({}, this.state.errorMessages);
                     errorMessagesCopy.email = errorMessages.email;
                     this.setState({ errorMessages: errorMessagesCopy });
-                    return false;
                 }
             }
 
-            alert('サーバー側でエラーが発生しました');
-            
             return false;
         }
-
-        return false;
     }
 
     /**
@@ -184,7 +177,7 @@ export default class Register extends Component {
             jwtToken = await (await axios.post(_URL + '/login', requestBody)).data.access_token;
             //console.log(jwtToken);
         } catch (error) {
-            console.log(error.response);
+            console.log(error);
             return false;
         }
 
@@ -205,10 +198,8 @@ export default class Register extends Component {
             token: jwtToken,
             userId: userData.id,
             name: userData.name,
-            email: userData.email,
             icon: userData.icon
         }
-
         actions.register(setUserStoreData);
 
         //console.log(userStore.userStatus);
@@ -227,16 +218,16 @@ export default class Register extends Component {
             return;
         }
 
-        //ユーザー登録（/register）は出来たか？ && ログインは出来たか？
-        if (await this.requestRegister() && await this.requestLogin()) {
-            //ログインの状態を変更
-            this.setState({ nowLogin: true });
+        //ユーザー登録（/register）は出来たか？
+        if (this.requestRegister()) {
+            //ログインを開始
+            this.requestLogin();
         }
     }
 
     render() {
         //既にログインしてていたら、'/'に移動
-        if (this.state.nowLogin) {
+        if (userStore.nowLogin) {
             return (<Redirect to="/" />);
         }
 
