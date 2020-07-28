@@ -102,6 +102,10 @@ export default class CreateAiModel extends Component {
         return validationManager.isError;
     }
 
+    /**
+     * /api/aimodel にpostリクエスト
+     * @returns {boolean} リクエストの成功結果
+     */
     async requestCreate() {
         //リクエストボディの構築
         const formData = new FormData();
@@ -130,7 +134,6 @@ export default class CreateAiModel extends Component {
                 return false;
             }
 
-
             //エラーステータスは401か？(未ログイン,トークンの期限切れ)
             if (error.response.status === 401) {
                 //エラーメッセージを格納
@@ -140,7 +143,9 @@ export default class CreateAiModel extends Component {
         }
     }
 
-
+    /**
+     * サブミット
+     */
     async doSubmit() {
         //バリエーションに問題があったか？
         if (this.doValidation()) {
@@ -150,7 +155,6 @@ export default class CreateAiModel extends Component {
         //AIモデルは作れたか？
         if (await this.requestCreate()) {
             this.setState({ redirectTo: `/userl/${userStore.userStatus.userId}/aimode` });
-
             return;
         }
     }
