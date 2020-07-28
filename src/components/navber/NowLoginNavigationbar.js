@@ -14,7 +14,7 @@ export default class NowLoginNavigationbar extends Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+                        <Nav.Link href="/aimodel/create">AIモデル新規登録</Nav.Link>
                         <img id="userIcon" src={'https://aitoke.s3-ap-northeast-1.amazonaws.com/' + userStore.userStatus.icon} />
                         <UserNavMenu />
                     </Nav>
