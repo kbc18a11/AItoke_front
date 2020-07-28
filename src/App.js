@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Index from './pages/appPages/Index';
 import Wada from './pages/development/Wada';
 import Murase from './pages/development/Murase';
 import Tsutsui from './pages/development/Tsutsui';
@@ -21,6 +22,7 @@ function App() {
       <div>
         <Router>
           <Switch>
+            <Route path="/" component={Index} />
             <Route path="/wada" component={Wada} />
             <Route path="/murase" component={Murase} />
             <Route path="/tsutsui" component={Tsutsui} />
