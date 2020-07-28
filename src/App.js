@@ -22,7 +22,6 @@ function App() {
       <div>
         <Router>
           <Switch>
-            <Route path="/" component={Index} />
             <Route path="/wada" component={Wada} />
             <Route path="/murase" component={Murase} />
             <Route path="/tsutsui" component={Tsutsui} />
@@ -33,6 +32,7 @@ function App() {
             <Route path="/userupdate" component={userUpdate} />
             <Route path="/logout" component={Logout} />
             <Route path="/aimodel/create" component={CreateAiModel} />
+            <Route path="/" component={Index} />
           </Switch>
         </Router>
       </div>
