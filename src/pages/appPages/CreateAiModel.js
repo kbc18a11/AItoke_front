@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
 import '../../css/errorText.css';
 import axios from 'axios';
-import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
@@ -120,7 +120,7 @@ export default class CreateAiModel extends Component {
                 Authorization: `Bearer ${userStore.token}`
             };
             //通信開始
-            await (await axios.post(_URL + '/aimodel',
+            await (await axios.post(_APIURL + '/aimodel',
                 formData));
 
             return true;

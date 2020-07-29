@@ -1,6 +1,8 @@
 import { userDispatcher } from './userDispatcher';
 import { ActionType } from './userActions';
-import { EventEmitter } from "events";
+import { EventEmitter } from 'events';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import axios from 'axios';
 
 class UserStore extends EventEmitter {
     constructor() {
@@ -55,7 +57,19 @@ class UserStore extends EventEmitter {
     /**
      * ログアウト
      */
-    logout() {
+    async logout() {
+        //APIにログアウトをリクエスト
+        try {
+            //ヘッダーを設定
+            axios.defaults.headers.common = {
+                Authorization: `Bearer ${this.token}`
+            };
+            await axios.post(_APIURL + '/logout');
+        } catch (error) {
+            console.log(error.response);
+        }
+
+        //ログインの状態を変更
         this.nowLogin = false;
         //ローカルストレージを全てクリア
         this.clearLocalStorage();

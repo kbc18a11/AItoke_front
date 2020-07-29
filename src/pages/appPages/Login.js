@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
 import '../../css/errorText.css';
 import axios from 'axios';
-import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
@@ -91,7 +91,7 @@ export default class Login extends Component {
         let jwtToken;
         try {
             //ログインして、jwtトークンを取得
-            jwtToken = await (await axios.post(_URL + '/login', requestBody)).data.access_token;
+            jwtToken = await (await axios.post(_APIURL + '/login', requestBody)).data.access_token;
             //console.log(jwtToken);
         } catch (error) {
             console.log(error);
@@ -111,7 +111,7 @@ export default class Login extends Component {
         let userData;
         try {
             //ユーザー情報取得
-            userData = await (await axios.get(_URL + '/me',
+            userData = await (await axios.get(_APIURL + '/me',
                 { headers: { Authorization: `Bearer ${jwtToken}` } })).data;
         } catch (error) {
             console.log(error.response);

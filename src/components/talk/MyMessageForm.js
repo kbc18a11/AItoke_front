@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import axios from 'axios';
 export default class MyMessageForm extends Component {
 
@@ -63,7 +63,7 @@ export default class MyMessageForm extends Component {
 
         try {
             //NobyAPIとの通信開始
-            const responce = await axios.get(_URL + '/talkText?text=' + this.state.message);
+            const responce = await axios.get(_APIURL + '/talkText?text=' + this.state.message);
             //console.log(responce);
             
             //SpeechBubbleに送るtext

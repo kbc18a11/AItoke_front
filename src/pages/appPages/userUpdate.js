@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/container.css';
 import '../../css/errorText.css';
 import axios from 'axios';
-import { _URL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
@@ -123,7 +123,7 @@ export default class userUpdate extends Component {
                 Authorization: `Bearer ${userStore.token}`
             };
             //通信開始
-            await (await axios.post(_URL + `/user/${userStore.userStatus.userId}`,
+            await (await axios.post(_APIURL + `/user/${userStore.userStatus.userId}`,
                 formData));
         } catch (error) {
             console.log(error.response);
@@ -164,7 +164,7 @@ export default class userUpdate extends Component {
         let userData;
         try {
             //ユーザー情報取得
-            userData = await (await axios.get(_URL + '/me',
+            userData = await (await axios.get(_APIURL + '/me',
                 { headers: { Authorization: `Bearer ${userStore.token}` } })).data;
         } catch (error) {
             console.log(error.response);
