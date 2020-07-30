@@ -38,7 +38,7 @@ export default class PagenationList extends Component {
         const paginationItems = [];
 
         //ページネーションアイテムの生成
-        for (let i = 1; i <= this.state.lastPage; i++) {
+        for (var i = 1; i <= this.state.lastPage; i++) {
             paginationItems.push(
                 <Pagination.Item
                     active={i === this.state.currentPage}
