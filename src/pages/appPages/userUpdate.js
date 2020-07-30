@@ -7,6 +7,7 @@ import '../../css/container.css';
 import '../../css/errorText.css';
 import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
+import { _S3URL } from '../../apiURL/s3';
 import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
@@ -22,7 +23,7 @@ export default class userUpdate extends Component {
             name: userStore.userStatus.name,
             email: userStore.userStatus.email,
             //アイコンのURL
-            iconURL: 'https://aitoke.s3-ap-northeast-1.amazonaws.com/' + userStore.userStatus.icon,
+            iconURL: _S3URL + userStore.userStatus.icon,
             //アップロードするアイコンファイル
             iconFile: null,
             //fromの項目ごとのバリデーションルール

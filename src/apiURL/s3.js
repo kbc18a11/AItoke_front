@@ -1,0 +1,1 @@
+export const _S3URL = 'https://aitoke.s3-ap-northeast-1.amazonaws.com/';

@@ -1,0 +1,6 @@
+.linkCharacter :link,
+.linkCharacter:visited,
+.linkCharacterc:hover,
+.linkCharacter:active {
+  color: black;
+}

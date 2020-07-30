@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UserNavMenu from './UserNavMenu';
 import userStore from '../../flux/user/UserStore';
 import '../../css/userIcon.css';
+import { _S3URL } from '../../apiURL/s3';
 
 export default class NowLoginNavigationbar extends Component {
     render() {
@@ -15,7 +16,7 @@ export default class NowLoginNavigationbar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="/aimodel/create">AIモデル新規登録</Nav.Link>
-                        <img id="userIcon" src={'https://aitoke.s3-ap-northeast-1.amazonaws.com/' + userStore.userStatus.icon} />
+                        <img id="userIcon" src={_S3URL + userStore.userStatus.icon} />
                         <UserNavMenu />
                     </Nav>
                     <Form inline>
