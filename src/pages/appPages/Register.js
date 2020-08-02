@@ -197,6 +197,7 @@ export default class Register extends Component {
             token: jwtToken,
             userId: userData.id,
             name: userData.name,
+            email: userData.email,
             icon: userData.icon
         }
         actions.register(setUserStoreData);
