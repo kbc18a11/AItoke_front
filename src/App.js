@@ -13,7 +13,7 @@ import NavberState from './flux/user/userViwe/NavberState';
 import userUpdate from './pages/appPages/userUpdate';
 import Logout from './pages/appPages/Logout';
 import CreateAiModel from './pages/appPages/CreateAiModel';
-
+import UserCreatedAimodels from './pages/appPages/UserCreatedAimodels';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
             <Route path="/userupdate" component={userUpdate} />
             <Route path="/logout" component={Logout} />
             <Route path="/aimodel/create" component={CreateAiModel} />
+            <Route path="/userl/:id/aimode" component={UserCreatedAimodels} />
             <Route path="/" component={Index} />
           </Switch>
         </Router>
