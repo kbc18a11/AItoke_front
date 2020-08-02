@@ -43,6 +43,10 @@ export default class Register extends Component {
                 min: '8文字以上入力してください',
                 email: 'メールアドレスを入力してください'
             },
+
+            //リダイレクト先
+            //ログインしていたら、リダイレクトする
+            redirectTo: userStore.nowLogin ? '/' : '',
         };
 
         this.setName = this.setName.bind(this);
@@ -133,15 +137,9 @@ export default class Register extends Component {
 
         //ユーザー登録APIにリクエスト
         try {
-            const createResult = await (await axios.post(_APIURL + '/register', requestBody)).data.createResult;
-
-            //ユーザー登録は成功したか？
-            if (createResult) {
-                return true;
-            }
-
+            await (await axios.post(_APIURL + '/register', requestBody)).data.createResult;
         } catch (error) {
-            //console.log(error.response);
+            console.log(error.response);
             const errorMessages = error.response.data.error;
 
             //バリデーションによるユーザー登録ができなかった場合
@@ -154,9 +152,10 @@ export default class Register extends Component {
                     this.setState({ errorMessages: errorMessagesCopy });
                 }
             }
-
             return false;
         }
+
+        return true;
     }
 
     /**
@@ -177,7 +176,7 @@ export default class Register extends Component {
             jwtToken = await (await axios.post(_APIURL + '/login', requestBody)).data.access_token;
             //console.log(jwtToken);
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
             return false;
         }
 
@@ -218,17 +217,18 @@ export default class Register extends Component {
             return;
         }
 
-        //ユーザー登録（/register）は出来たか？
-        if (this.requestRegister()) {
-            //ログインを開始
-            this.requestLogin();
+        //ユーザー登録（/register）は出来たか？ && ログインは出来たか？
+        if (await this.requestRegister() && await this.requestLogin()) {
+            console.log('a');
+
+            this.setState({ redirectTo: '/' });
         }
     }
 
     render() {
-        //既にログインしてていたら、'/'に移動
-        if (userStore.nowLogin) {
-            return (<Redirect to="/" />);
+        //リダイレクト先は設定されているか？
+        if (this.state.redirectTo) {
+            return (<Redirect to={this.state.redirectTo} />);
         }
 
         return (
