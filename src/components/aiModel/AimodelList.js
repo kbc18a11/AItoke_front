@@ -16,7 +16,8 @@ export default class AimodelList extends Component {
             lastPage: 1,//ページネーションの最後のページ数
             aimodelListData: [],//リストデータの一覧
             user_id: props.user_id,//対象のユーザーid
-            getaimodelListDataUri: props.getaimodelListDataUri//データを取得するURL
+            getaimodelListDataUri: props.getaimodelListDataUri,//データを取得するURL
+            listItemUrl: props.listItemUrl//リストアイテムのリンク先
         };
 
         this.setCurrentPage = this.setCurrentPage.bind(this);
@@ -62,7 +63,8 @@ export default class AimodelList extends Component {
         return this.state.aimodelListData.map((params) => {
             return (<AimodelListItem name={params.name}
                 close_mouth_image={_S3URL + params.close_mouth_image}
-                self_introduction={params.self_introduction} />);
+                self_introduction={params.self_introduction}
+                linkTo={this.state.listItemUrl + params.id} />);
         });
     }
 

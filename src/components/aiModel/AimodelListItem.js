@@ -17,7 +17,8 @@ export default class AimodelListItem extends Component {
             self_introduction:
                 //自己紹介文は存在しているか？
                 props.self_introduction ?
-                    this.substrSelf_introduction(String(props.self_introduction)) : ''
+                    this.substrSelf_introduction(String(props.self_introduction)) : '',
+            linkTo: props.linkTo//Linkの指定先
         }
     }
 
@@ -84,7 +85,7 @@ export default class AimodelListItem extends Component {
         return (
             <ListGroup.Item as="li">
                 <Media>
-                    <Link to="/">
+                    <Link to={this.state.linkTo}>
                         <img
                             width={64} height={64}
                             className="imageFile"
@@ -92,8 +93,8 @@ export default class AimodelListItem extends Component {
                             alt="Generic placeholder" />
                     </Link>
                     <Media.Body className="text-left">
-                        <Link className="linkCharacter" to="/"><h3>{this.state.name}</h3></Link>
-                        <Link className="linkCharacter" to="/">
+                        <Link className="linkCharacter" to={this.state.linkTo}><h3>{this.state.name}</h3></Link>
+                        <Link className="linkCharacter" to={this.state.linkTo}>
                             <p style={self_introductionStyle}>{this.state.self_introduction}</p>
                         </Link>
                     </Media.Body>
