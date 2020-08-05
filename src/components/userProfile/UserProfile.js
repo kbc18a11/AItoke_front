@@ -10,9 +10,9 @@ export default class UserProfile extends Component {
         super(props);
 
         this.state = {
-            user_id: props.user_id,
-            user_name: '',
-            user_icon: null
+            id: props.user_id,
+            name: '',
+            icon: null
         }
     }
 
@@ -21,12 +21,12 @@ export default class UserProfile extends Component {
      */
     async setUserData() {
         //ユーザー情報を取得
-        const userData = await (await axios(_APIURL + `/user/${this.state.user_id}`)).data;
+        const userData = await (await axios(_APIURL + `/user/${this.state.id}`)).data;
 
         //ユーザーの名前をセット
-        this.setState({ user_name: userData.name });
+        this.setState({ name: userData.name });
         //ユーザーアイコンのURLをセット
-        this.setState({ user_icon: userData.icon });
+        this.setState({ icon: userData.icon });
 
     }
 
@@ -43,10 +43,10 @@ export default class UserProfile extends Component {
                         <img
                             width={64} height={64}
                             className="imageFile"
-                            src={_S3URL + this.state.user_icon}
+                            src={_S3URL + this.state.icon}
                             alt="Generic placeholder" />
                         <Media.Body className="text-left">
-                            <h3>{this.state.user_name}さんのAIモデル一覧</h3>
+                            <h3>{this.state.name}さんのAIモデル一覧</h3>
                         </Media.Body>
                     </Media>
                 </Jumbotron>
