@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Container, Row, Col, Image, Jumbotron, Media } from 'react-bootstrap';
+import { Jumbotron, Media } from 'react-bootstrap';
 import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import { _S3URL } from '../../apiURL/s3';
