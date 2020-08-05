@@ -1,4 +1,5 @@
-.linkCharacter :link,
+.linkCharacter,
+.linkCharacter:link,
 .linkCharacter:visited,
 .linkCharacterc:hover,
 .linkCharacter:active {
