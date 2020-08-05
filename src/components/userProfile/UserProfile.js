@@ -19,7 +19,7 @@ export default class UserProfile extends Component {
     /**
      * ユーザー情報をセット
      */
-    async setUserInfo() {
+    async setUserData() {
         //ユーザー情報を取得
         const userData = await (await axios(_APIURL + `/user/${this.state.user_id}`)).data;
 
@@ -32,7 +32,7 @@ export default class UserProfile extends Component {
 
     componentDidMount() {
         //ユーザー情報を取得
-        this.setUserInfo();
+        this.setUserData();
     }
 
     render() {
