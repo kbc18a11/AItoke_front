@@ -51,7 +51,7 @@ export default class AimodelProfile extends Component {
                             <h3>{this.state.name}</h3>
                             <p style={{ whiteSpace: 'pre-line' }}>{this.state.self_introduction}</p>
                             <AimodelGoodButton />{' '}
-                            <Link to="/"><Button>会話してみる</Button></Link>
+                            <Link to={`/aimode/${this.state.id}/taking`}><Button>会話してみる</Button></Link>
                         </Media.Body>
                     </Media>
                 </Jumbotron>

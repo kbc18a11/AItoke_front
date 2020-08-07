@@ -27,7 +27,7 @@ function App() {
             <Route path="/murase" component={Murase} />
             <Route path="/tsutsui" component={Tsutsui} />
             <Route path="/nakagoshi" component={Nakagoshi} />
-            <Route path="/taking" component={Talking} />
+            <Route path="/aimode/:id/taking" component={Talking} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/userupdate" component={userUpdate} />
