@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Jumbotron, Media } from 'react-bootstrap';
-import axios from 'axios';
+import { Jumbotron, Media, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import { _S3URL } from '../../apiURL/s3';
 import '../../css/inputImage.css';
@@ -50,7 +50,8 @@ export default class AimodelProfile extends Component {
                         <Media.Body className="text-left">
                             <h3>{this.state.name}</h3>
                             <p style={{ whiteSpace: 'pre-line' }}>{this.state.self_introduction}</p>
-                            <AimodelGoodButton />
+                            <AimodelGoodButton />{' '}
+                            <Link to="/"><Button>会話してみる</Button></Link>
                         </Media.Body>
                     </Media>
                 </Jumbotron>

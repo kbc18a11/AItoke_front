@@ -4,9 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default class AimodelGoodButton extends Component {
     render() {
         return (
-            <div>
-                <Button>お気に入り登録</Button>
-            </div>
+            <Button>お気に入り登録</Button>
         )
     }
 }
