@@ -12,6 +12,8 @@ export default class Talking extends Component {
         super(props);
 
         this.state = {
+            //AIモデルのid
+            aimodel_id: props.match.params.id,
             voiceText: '　',//ユーザーとAIのじゃべった内容
             log: { who: '', text: '' }//ログ1行分
         }
@@ -41,7 +43,7 @@ export default class Talking extends Component {
 
         return (
             <Row>
-                <Col md={4}><AimodelFace voiceText={this.state.voiceText} /></Col>
+                <Col md={4}><AimodelFace voiceText={this.state.voiceText} aimodel_id={this.state.aimodel_id} /></Col>
                 <Col md={8}>
                     <SpeechBubble text={this.state.voiceText} />
                     <MyMessageForm setVoice={e => this.setVoice(e)} setLog={e => this.setLog(e)} />
