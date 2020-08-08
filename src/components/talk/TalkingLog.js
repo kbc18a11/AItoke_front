@@ -24,8 +24,11 @@ export default class TalkingLog extends Component {
             && this.state.logList[this.state.logList.length - 1].text === log.text) {
             return;
         }
+        const logList = Object.assign([], this.state.logList);
 
-        this.state.logList.push(log);
+        //新しいログを末尾に配置
+        logList.push(log);
+        this.setState({ logList: logList });
     }
 
     componentWillReceiveProps(nextProps) {

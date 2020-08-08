@@ -3,7 +3,7 @@ import closeMouth from './../../image/character0.png';
 import opneMouth from './../../image/character1.png';
 import '../../css/characterFace.css';
 
-export default class Live2DController extends Component {
+export default class AimodelFace extends Component {
 
     constructor(props) {
         super(props);
@@ -53,20 +53,19 @@ export default class Live2DController extends Component {
         synthes.lang = 'ja-UP';
         synthes.text = this.state.voiceText;
         speechSynthesis.speak(synthes);
-        
+
         //音声の再生中の処理
-        synthes.onstart = function () {
+        synthes.onstart = () => {
             document.getElementById('character').src = opneMouth;
         }
 
         //音声の再生が終わった後の処理
-        synthes.onend = function () {
+        synthes.onend = () => {
             document.getElementById('character').src = closeMouth;
         }
     }
 
-    render() {//描写処理
-
+    render() {
         return (
             <div>
                 <img id='character' src={this.state.faceState} alt='' />
