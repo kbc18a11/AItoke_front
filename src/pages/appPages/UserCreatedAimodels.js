@@ -19,7 +19,7 @@ export default class UserCreatedAimodels extends Component {
             <div>
                 <UserProfile user_id={this.state.targetUser_id} />
                 <AimodelList getaimodelListDataUri={_APIURL + '/aimodel?page='}
-                    user_id={this.state.targetUser_id} />
+                    user_id={this.state.targetUser_id} listItemUrl="/aimode/" />
             </div>
         )
     }
