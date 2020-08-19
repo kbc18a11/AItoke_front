@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Form, Button, Container, Row, Col, Image, Jumbotron } from 'react-bootstrap';
 import UserProfile from '../../components/userProfile/UserProfile';
 import AimodelList from '../../components/aiModel/AimodelList';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
