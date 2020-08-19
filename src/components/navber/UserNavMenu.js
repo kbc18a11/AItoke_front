@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
 import { NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default class UserNavMenu extends Component {
     render() {
 
         return (
             <NavDropdown title="" id="basic-nav-dropdown" >
-                <NavDropdown.Item href="/userupdate">ユーザー情報更新</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <LinkContainer to='/userupdate'><NavDropdown.Item>ユーザー情報更新</NavDropdown.Item></LinkContainer>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/logout">ログアウト</NavDropdown.Item>
+                <LinkContainer to='/logout'><NavDropdown.Item>ログアウト</NavDropdown.Item></LinkContainer>
             </NavDropdown>
         )
     }
