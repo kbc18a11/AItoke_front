@@ -19,26 +19,24 @@ import AimodelInfo from './pages/appPages/AimodelInfo';
 function App() {
   return (
     <div className="App">
-      <NavberState />
-      <div>
-        <Router>
-          <Switch>
-            <Route path="/wada" component={Wada} />
-            <Route path="/murase" component={Murase} />
-            <Route path="/tsutsui" component={Tsutsui} />
-            <Route path="/nakagoshi" component={Nakagoshi} />
-            <Route path="/aimode/:id/taking" component={Talking} />
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
-            <Route path="/userupdate" component={userUpdate} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/aimodel/create" component={CreateAiModel} />
-            <Route path="/aimode/:id" component={AimodelInfo} />
-            <Route path="/userl/:id/aimode" component={UserCreatedAimodels} />
-            <Route path="/" component={Index} />
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <NavberState />
+        <Switch>
+          <Route path="/wada" component={Wada} />
+          <Route path="/murase" component={Murase} />
+          <Route path="/tsutsui" component={Tsutsui} />
+          <Route path="/nakagoshi" component={Nakagoshi} />
+          <Route path="/aimode/:id/taking" component={Talking} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/userupdate" component={userUpdate} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/aimodel/create" component={CreateAiModel} />
+          <Route path="/aimode/:id" component={AimodelInfo} />
+          <Route path="/userl/:id/aimode" component={UserCreatedAimodels} />
+          <Route path="/" component={Index} />
+        </Switch>
+      </Router>
     </div>
   );
 }
