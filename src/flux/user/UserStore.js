@@ -64,7 +64,7 @@ class UserStore extends EventEmitter {
             axios.defaults.headers.common = {
                 Authorization: `Bearer ${this.token}`
             };
-            await axios.post(_APIURL + '/logout');
+            axios.post(_APIURL + '/logout');
         } catch (error) {
             console.log(error.response);
         }

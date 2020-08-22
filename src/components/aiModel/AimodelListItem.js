@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ListGroup, Media, Row, Col } from 'react-bootstrap';
+import { ListGroup, Media } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/inputImage.css';
 import '../../css/linkCharacter.css';

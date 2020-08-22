@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron, Media, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; import axios from 'axios';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import { _S3URL } from '../../apiURL/s3';
 import '../../css/inputImage.css';
