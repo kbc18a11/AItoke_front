@@ -3,14 +3,14 @@ import { Form, Button, Container, Row, Col, Image } from 'react-bootstrap';
 import Textarea from '../fromItem/Textarea';
 import userStore from '../../flux/user/UserStore';
 import { actions } from '../../flux/user/userActions';
-import NoLoginCommentFrom from './NoLoginCommentFrom.tsx';
+import NoLoginCommentFrom from './NoLoginCommentFrom';
 import ValidationManager from '../../modules/class/ValidationManager';
 import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 
 interface Props {
 	aimodel_id: number;
-	uploadCreatedComment: Method; //作成したコメントを親コンポーネントに送信
+	uploadCreatedComment: any; //作成したコメントを親コンポーネントに送信
 }
 
 interface State {

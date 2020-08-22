@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ListGroup, Col, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CreateCommentForm from './CreateCommentForm.tsx';
-import CommentListItem from './CommentListItem.tsx';
+import CreateCommentForm from './CreateCommentForm';
+import CommentListItem from './CommentListItem';
 import PagenationList from '../pagenations/PagenationList';
 import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
@@ -83,7 +83,7 @@ export default class CommentList extends Component<Props, State> {
 	 */
 	createCommentList() {
 		return this.state.commentDatas.map(
-			(commentData): JSX.Element => {
+			(commentData: { [s: string]: any }): any => {
 				return (
 					<CommentListItem
 						comment={commentData.comment}
