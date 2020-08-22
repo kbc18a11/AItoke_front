@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Container, Row, Col, Image } from 'react-bootstrap';
 import Textarea from '../fromItem/Textarea';
 import userStore from '../../flux/user/UserStore';
+import { actions } from '../../flux/user/userActions';
 import NoLoginCommentFrom from './NoLoginCommentFrom.tsx';
 import ValidationManager from '../../modules/class/ValidationManager';
 import axios from 'axios';
@@ -26,10 +27,11 @@ export default class CreateCommentForm extends Component<Props, State> {
 			comment: '',
 			nowLogin: userStore.nowLogin,
 			rule: {
-				comment: 'max:255',
+				comment: 'max:255|required',
 			},
 			ruleTypeErrorMessages: {
 				max: '255文字以下入力してください',
+				required: 'コメントを入力してください',
 			},
 			errorMessages: [],
 		};
@@ -69,7 +71,7 @@ export default class CreateCommentForm extends Component<Props, State> {
 		return validationManager.isError;
 	}
 
-	async requestCreateComment() {
+	async requestCreateComment(): Promise<boolean> {
 		//リクエスト用のデータ
 		const requestData: { [key: string]: string } = {
 			comment: this.state.comment,
@@ -90,24 +92,30 @@ export default class CreateCommentForm extends Component<Props, State> {
 			).data;
 
 			console.log(resultData);
+			return true;
 		} catch (error) {
 			console.log(error.response);
 
 			//エラーステータスは401か？(未ログイン,トークンの期限切れ)
 			if (error.response.status === 401) {
+				//ログアウトを実行
+				actions.logout();
 				//未ログインに変更
 				this.setState({ nowLogin: false });
 			}
+			return false;
 		}
 	}
 
-	doSubmit(): void {
+	async doSubmit(): Promise<void> {
 		//バリエーションエラーはあったか？
 		if (this.doValidation()) {
 			return;
 		}
-		//コメント作成のリクエストを開始
-		this.requestCreateComment();
+		//コメント作成のリクエストが成功したか？
+		if (await this.requestCreateComment()) {
+			return;
+		}
 	}
 
 	render() {
