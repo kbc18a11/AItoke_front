@@ -14,7 +14,7 @@ interface State {
 	nowLogin: boolean; //ユーザーのログイン状態
 	rule: { [key: string]: string }; //バリエーションのルール
 	ruleTypeErrorMessages: { [key: string]: string }; //バリエーションルールごとのエラーメッセージ
-	errorMessage: string; //表示させるエラーメッセージ
+	errorMessages: string[]; //表示させるエラーメッセージ
 }
 export default class CreateCommentForm extends Component<Props, State> {
 	constructor(props: Props) {
@@ -29,7 +29,7 @@ export default class CreateCommentForm extends Component<Props, State> {
 			ruleTypeErrorMessages: {
 				max: '255文字以下入力してください',
 			},
-			errorMessage: '',
+			errorMessages: [],
 		};
 
 		this.setComment = this.setComment.bind(this);
@@ -57,7 +57,7 @@ export default class CreateCommentForm extends Component<Props, State> {
 		);
 
 		//エラーメッセージまたは空白文字のセット
-		this.setState({ errorMessage: resultMessages.comment });
+		this.setState({ errorMessages: resultMessages.comment });
 
 		//エラーメッセージは存在したか？
 		return validationManager.isError;
@@ -80,7 +80,7 @@ export default class CreateCommentForm extends Component<Props, State> {
 					<Form>
 						<Textarea
 							setValue={this.setComment}
-							outPutErrotMeaagages={this.state.errorMessage}
+							outPutErrotMeaagages={this.state.errorMessages}
 							placeholder='コメントを入力'
 						/>
 						<Button variant='primary' onClick={this.doSubmit}>
