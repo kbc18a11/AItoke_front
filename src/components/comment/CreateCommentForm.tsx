@@ -4,9 +4,11 @@ import Textarea from '../fromItem/Textarea';
 import userStore from '../../flux/user/UserStore';
 import NoLoginCommentFrom from './NoLoginCommentFrom.tsx';
 import ValidationManager from '../../modules/class/ValidationManager';
+import axios from 'axios';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 
 interface Props {
-	id: number;
+	aimodel_id: number;
 }
 
 interface State {
@@ -47,6 +49,10 @@ export default class CreateCommentForm extends Component<Props, State> {
 		this.setState({ comment: e.currentTarget.value });
 	}
 
+	/**
+	 * バリエーションの実行やエラーメッセージの格納
+	 * @returns {boolean}
+	 */
 	doValidation(): boolean {
 		const validationManager = new ValidationManager();
 		//バリエーションの検証を実行
@@ -63,8 +69,45 @@ export default class CreateCommentForm extends Component<Props, State> {
 		return validationManager.isError;
 	}
 
-	doSubmit() {
-		this.doValidation();
+	async requestCreateComment() {
+		//リクエスト用のデータ
+		const requestData: { [key: string]: string } = {
+			comment: this.state.comment,
+		};
+
+		//ヘッダーを設定
+		axios.defaults.headers.common = {
+			Authorization: `Bearer ${userStore.token}`,
+		};
+
+		try {
+			//通信開始
+			const resultData = await (
+				await axios.post(
+					_APIURL + `/aimodel/${this.props.aimodel_id}/aimodelcomment`,
+					requestData
+				)
+			).data;
+
+			console.log(resultData);
+		} catch (error) {
+			console.log(error.response);
+
+			//エラーステータスは401か？(未ログイン,トークンの期限切れ)
+			if (error.response.status === 401) {
+				//未ログインに変更
+				this.setState({ nowLogin: false });
+			}
+		}
+	}
+
+	doSubmit(): void {
+		//バリエーションエラーはあったか？
+		if (this.doValidation()) {
+			return;
+		}
+		//コメント作成のリクエストを開始
+		this.requestCreateComment();
 	}
 
 	render() {
