@@ -29,6 +29,7 @@ export default class CommentList extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.setCurrentPage = this.setCurrentPage.bind(this);
+		this.pushCommentDatas = this.pushCommentDatas.bind(this);
 	}
 
 	/**
@@ -41,6 +42,18 @@ export default class CommentList extends Component<Props, State> {
 
 		//ページが変化したため、コメントのデータを取得を実行
 		this.requestGetComment(nextPage);
+	}
+
+	/**
+	 * CreateCommentFormで新規作成されたコメントをリストの末尾に追加
+	 * @param {object} commentData
+	 */
+	pushCommentDatas(commentData: object): void {
+		//配列をコピー
+		const commentDatas: Array<object> = this.state.commentDatas.slice();
+		//引数のコメントデータを配列の最初に追加
+		commentDatas.push(commentData);
+		this.setState({ commentDatas: commentDatas });
 	}
 
 	/**
@@ -85,7 +98,10 @@ export default class CommentList extends Component<Props, State> {
 	render() {
 		return (
 			<div>
-				<CreateCommentForm aimodel_id={this.props.aimodel_id} />
+				<CreateCommentForm
+					aimodel_id={this.props.aimodel_id}
+					uploadCreatedComment={this.pushCommentDatas}
+				/>
 				<Container>
 					<Col md={{ span: 6 }}>
 						<ListGroup as='ul'>{this.createCommentList()}</ListGroup>

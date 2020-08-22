@@ -10,6 +10,7 @@ import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 
 interface Props {
 	aimodel_id: number;
+	uploadCreatedComment: Method; //作成したコメントを親コンポーネントに送信
 }
 
 interface State {
@@ -91,7 +92,8 @@ export default class CreateCommentForm extends Component<Props, State> {
 				)
 			).data;
 
-			console.log(resultData);
+			//作成したコメントを親コンポーネントにアップロード
+			this.props.uploadCreatedComment(resultData.createdComment);
 			return true;
 		} catch (error) {
 			console.log(error.response);

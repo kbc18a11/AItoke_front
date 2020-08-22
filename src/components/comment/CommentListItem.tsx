@@ -9,8 +9,8 @@ import { _S3URL } from '../../apiURL/s3';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 
 interface Props {
+	user_id: number; //親から送られるユーザーid
 	comment: string; //表示するコメント
-	user_id: number; //ユーザーid
 	linkTo: string; //ユーザー情報のリンク先
 }
 interface State {
@@ -20,6 +20,7 @@ interface State {
 
 export default class CommentListItem extends Component<Props, State> {
 	state = {
+		user_id: this.props.user_id,
 		user_name: '',
 		user_icon: '',
 	};
@@ -39,6 +40,8 @@ export default class CommentListItem extends Component<Props, State> {
 	}
 
 	componentDidMount() {
+		console.log(this.props);
+
 		//ユーザー情報の取得
 		this.requestGetUserData();
 	}
@@ -58,6 +61,7 @@ export default class CommentListItem extends Component<Props, State> {
 						<Link to={this.props.linkTo}>
 							<h3>{this.state.user_name}</h3>
 						</Link>
+						<h3>{this.props.user_id}</h3>
 						<Link className='linkCharacter' to={this.props.linkTo}>
 							<p>{this.props.comment}</p>
 						</Link>
