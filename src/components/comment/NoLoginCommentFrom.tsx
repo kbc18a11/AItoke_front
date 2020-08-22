@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button, Container, Row, Col, Image } from 'react-bootstrap';
+import { Button, Container, Col } from 'react-bootstrap';
 
 export default class NoLoginCommentFrom extends Component {
 	render() {
