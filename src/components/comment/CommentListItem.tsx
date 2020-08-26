@@ -40,8 +40,6 @@ export default class CommentListItem extends Component<Props, State> {
 	}
 
 	componentDidMount() {
-		console.log(this.props);
-
 		//ユーザー情報の取得
 		this.requestGetUserData();
 	}
