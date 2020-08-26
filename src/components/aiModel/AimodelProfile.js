@@ -5,7 +5,7 @@ import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import { _S3URL } from '../../apiURL/s3';
 import '../../css/inputImage.css';
-import AimodelGoodButton from '../goodButton/AimodelGoodButton';
+import FavoriteAimodelButton from '../specialButton/FavoriteAimodelButton';
 
 export default class AimodelProfile extends Component {
     constructor(props) {
@@ -51,7 +51,7 @@ export default class AimodelProfile extends Component {
                         <Media.Body className="text-left">
                             <h3>{this.state.name}</h3>
                             <p style={{ whiteSpace: 'pre-line' }}>{this.state.self_introduction}</p>
-                            <AimodelGoodButton />{' '}
+                            <FavoriteAimodelButton aimodel_id={this.state.id} />{' '}
                             <Link to={`/aimode/${this.state.id}/taking`}><Button>会話してみる</Button></Link>
                         </Media.Body>
                     </Media>

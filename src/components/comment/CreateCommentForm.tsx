@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, Row, Col, Image } from 'react-bootstrap';
+import { Form, Button, Container, Col } from 'react-bootstrap';
 import Textarea from '../fromItem/Textarea';
 import userStore from '../../flux/user/UserStore';
 import { actions } from '../../flux/user/userActions';
