@@ -71,6 +71,7 @@ export default class AimodelList extends Component {
             if (error.response.status === 401) {
                 //ログアウトを実行
                 actions.logout();
+                //アフター処理を実行
                 if (this.state.requestErrorAfterDoing) {
                     this.state.requestErrorAfterDoing();
                 }
