@@ -5,6 +5,8 @@ import axios from 'axios';
 import PagenationList from '../pagenations/PagenationList';
 import AimodelListItem from './AimodelListItem';
 import { _S3URL } from '../../apiURL/s3';
+import userStore from '../../flux/user/UserStore';
+import { actions } from '../../flux/user/userActions';
 
 export default class AimodelList extends Component {
     constructor(props) {
@@ -17,7 +19,8 @@ export default class AimodelList extends Component {
             aimodelListData: [],//リストデータの一覧
             user_id: props.user_id,//対象のユーザーid
             getaimodelListDataUri: props.getaimodelListDataUri,//データを取得するURL
-            listItemUrl: props.listItemUrl//リストアイテムのリンク先
+            listItemUrl: props.listItemUrl,//リストアイテムのリンク先
+            requestErrorAfterDoing: props.requestErrorAfterDoing//データが習得できずにエラーが発生した後に行うメソッド
         };
 
         this.setCurrentPage = this.setCurrentPage.bind(this);
@@ -48,11 +51,33 @@ export default class AimodelList extends Component {
 
         console.log(_URI);
 
-        const responceData =
-            await (await axios.get(_URI)).data;
+        //ログインはしているか？
+        if (userStore.nowLogin) {
+            //ヘッダーを設定
+            axios.defaults.headers.common = {
+                Authorization: `Bearer ${userStore.token}`,
+            };
+        }
 
-        this.setState({ lastPage: responceData.last_page });
-        this.setState({ aimodelListData: responceData.data });
+        try {
+            const responceData =
+                await (await axios.get(_URI)).data;
+            this.setState({ lastPage: responceData.last_page });
+            this.setState({ aimodelListData: responceData.data });
+        } catch (error) {
+            console.log(error.response);
+
+            //エラーステータスは401か？(未ログイン,トークンの期限切れ)
+            if (error.response.status === 401) {
+                //ログアウトを実行
+                actions.logout();
+                if (this.state.requestErrorAfterDoing) {
+                    this.state.requestErrorAfterDoing();
+                }
+                this.setState({ nowLogin: false });
+            }
+        }
+
     }
 
     /**
@@ -63,7 +88,6 @@ export default class AimodelList extends Component {
         return this.state.aimodelListData.map((params) => {
             return (<AimodelListItem name={params.name}
                 close_mouth_image={_S3URL + params.close_mouth_image}
-                self_introduction={params.self_introduction}
                 linkTo={this.state.listItemUrl + params.id} />);
         });
     }
