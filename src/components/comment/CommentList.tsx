@@ -29,7 +29,7 @@ export default class CommentList extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.setCurrentPage = this.setCurrentPage.bind(this);
-		this.pushCommentDatas = this.pushCommentDatas.bind(this);
+		this.unshiftCommentDatas = this.unshiftCommentDatas.bind(this);
 	}
 
 	/**
@@ -45,14 +45,14 @@ export default class CommentList extends Component<Props, State> {
 	}
 
 	/**
-	 * CreateCommentFormで新規作成されたコメントをリストの末尾に追加
+	 * CreateCommentFormで新規作成されたコメントをリストの最初に追加
 	 * @param {object} commentData
 	 */
-	pushCommentDatas(commentData: object): void {
+	unshiftCommentDatas(commentData: object): void {
 		//配列をコピー
 		const commentDatas: Array<object> = this.state.commentDatas.slice();
 		//引数のコメントデータを配列の最初に追加
-		commentDatas.push(commentData);
+		commentDatas.unshift(commentData);
 		this.setState({ commentDatas: commentDatas });
 	}
 
@@ -89,6 +89,8 @@ export default class CommentList extends Component<Props, State> {
 						comment={commentData.comment}
 						user_id={commentData.user_id}
 						linkTo={`/userl/${commentData.user_id}/aimode`}
+						user_name={commentData.name}
+						user_icon={commentData.icon}
 					/>
 				);
 			}
@@ -100,7 +102,7 @@ export default class CommentList extends Component<Props, State> {
 			<div>
 				<CreateCommentForm
 					aimodel_id={this.props.aimodel_id}
-					uploadCreatedComment={this.pushCommentDatas}
+					uploadCreatedComment={this.unshiftCommentDatas}
 				/>
 				<Container>
 					<Col md={{ span: 6 }}>

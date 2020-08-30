@@ -21,22 +21,21 @@ interface State {
 	errorMessages: string[]; //表示させるエラーメッセージ
 }
 export default class CreateCommentForm extends Component<Props, State> {
+	state = {
+		comment: '',
+		nowLogin: userStore.nowLogin,
+		rule: {
+			comment: 'max:255|required',
+		},
+		ruleTypeErrorMessages: {
+			max: '255文字以下入力してください',
+			required: 'コメントを入力してください',
+		},
+		errorMessages: [],
+	};
+
 	constructor(props: Props) {
 		super(props);
-
-		this.state = {
-			comment: '',
-			nowLogin: userStore.nowLogin,
-			rule: {
-				comment: 'max:255|required',
-			},
-			ruleTypeErrorMessages: {
-				max: '255文字以下入力してください',
-				required: 'コメントを入力してください',
-			},
-			errorMessages: [],
-		};
-
 		this.setComment = this.setComment.bind(this);
 		this.doSubmit = this.doSubmit.bind(this);
 	}
@@ -91,9 +90,20 @@ export default class CreateCommentForm extends Component<Props, State> {
 					requestData
 				)
 			).data;
+			console.log(resultData.createdComment);
+
+			//親コンポーネントに上げるデータ
+			const uploaddata: { [key: string]: any } = {
+				id: resultData.createdComment.id,
+				comment: resultData.createdComment.comment,
+				created_at: resultData.createdComment.created_at,
+				user_id: userStore.userStatus.userId,
+				name: userStore.userStatus.name,
+				icon: userStore.userStatus.icon,
+			};
 
 			//作成したコメントを親コンポーネントにアップロード
-			this.props.uploadCreatedComment(resultData.createdComment);
+			this.props.uploadCreatedComment(uploaddata);
 			return true;
 		} catch (error) {
 			console.log(error.response);

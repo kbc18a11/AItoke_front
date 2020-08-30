@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AimodelList from '../../components/aiModel/AimodelList';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
-import axios from 'axios';
 import userStore from '../../flux/user/UserStore';
 import { actions } from '../../flux/user/userActions';
 import { Redirect } from 'react-router-dom';
