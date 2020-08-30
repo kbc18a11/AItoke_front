@@ -1,1 +1,1 @@
-export const _APIURL = 'http://127.0.0.1:8000/api';
+export const _APIURL = 'https://www.aitalkapi.work/api';
