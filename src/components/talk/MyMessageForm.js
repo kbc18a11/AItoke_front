@@ -3,6 +3,7 @@ import { Button, Form, FormControl, Container, Row, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import axios from 'axios';
+
 export default class MyMessageForm extends Component {
 
     constructor(props) {
@@ -16,6 +17,7 @@ export default class MyMessageForm extends Component {
         }
 
         this.doChangeMessage = this.doChangeMessage.bind(this);
+        this.resetMessage = this.resetMessage.bind(this);
         this.doGetAPI = this.doGetAPI.bind(this);
     }
 
@@ -49,6 +51,13 @@ export default class MyMessageForm extends Component {
         this.setState({ message: e.target.value });
     }
 
+    /**
+     * messageを空にする
+     */
+    resetMessage() {
+        this.setState({ message: '' });
+    }
+
 
     /**
      * APIとの通信
@@ -65,7 +74,7 @@ export default class MyMessageForm extends Component {
             //NobyAPIとの通信開始
             const responce = await axios.get(_APIURL + '/talkText?text=' + this.state.message);
             //console.log(responce);
-            
+
             //SpeechBubbleに送るtext
             this.props.setVoice(responce.data.text);
 
@@ -98,7 +107,7 @@ export default class MyMessageForm extends Component {
                                 placeholder="メッセージを入力してください"
                                 className="" onChange={this.doChangeMessage} />
                         </Col>
-                        <Col xs={6} md={3}><Button variant="primary" block className="">自分の声で喋る</Button></Col>
+                        <Col xs={6} md={3}><Button variant="primary" block className="" onClick={this.resetMessage} disabled={this.state.nowConnecting}>リセット</Button></Col>
                         <Col xs={6} md={3}><Button variant="primary" block className="" onClick={this.doGetAPI} disabled={this.state.nowConnecting}>メッセージを送る</Button></Col>
                     </Row>
                 </Form>
