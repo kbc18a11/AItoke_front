@@ -23,6 +23,7 @@ export default class AimodelSerchber extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 
+		this.doSubmit = this.doSubmit.bind(this);
 		this.setSerchWord = this.setSerchWord.bind(this);
 	}
 
@@ -38,9 +39,17 @@ export default class AimodelSerchber extends Component<Props, State> {
 		this.setState({ serchWord: e.target.value.split(splitRule) });
 	}
 
+	/**
+	 *　テキストに対して、Enterキーを押したときのイベントを無効か
+	 * @param e
+	 */
+	doSubmit(e: any) {
+		e.preventDefault();
+	}
+
 	render() {
 		return (
-			<Form inline>
+			<Form inline onSubmit={this.doSubmit}>
 				<FormControl
 					type='text'
 					placeholder='AIモデルを検索'
