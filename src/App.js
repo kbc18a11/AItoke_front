@@ -13,6 +13,8 @@ import UserCreatedAimodels from './pages/appPages/UserCreatedAimodels';
 import AimodelInfo from './pages/appPages/AimodelInfo';
 import FavoriteAiModel from './pages/appPages/FavoriteAiModel';
 import SearchAimodel from './pages/appPages/SearchAimodel';
+import MyAimodels from './pages/appPages/MyAimodels';
+import UpdateAimodel from './pages/appPages/UpdateAimodel';
 
 function App() {
   return (
@@ -26,9 +28,11 @@ function App() {
           <Route path="/userupdate" component={userUpdate} />
           <Route path="/logout" component={Logout} />
           <Route path="/aimodel/create" component={CreateAiModel} />
+          <Route path="/aimodel/update/:id" component={UpdateAimodel} />
           <Route path="/aimodel/serch/:serchWord" component={SearchAimodel} />
           <Route path="/aimode/:id" component={AimodelInfo} />
           <Route path="/favorite/aimode" component={FavoriteAiModel} />
+          <Route path="/user/my/aimodel" component={MyAimodels} />
           <Route path="/userl/:id/aimode" component={UserCreatedAimodels} />
           <Route path="/" component={Index} />
         </Switch>

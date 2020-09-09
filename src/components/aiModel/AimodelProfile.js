@@ -5,7 +5,7 @@ import axios from 'axios';
 import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 import { _S3URL } from '../../apiURL/s3';
 import '../../css/inputImage.css';
-import FavoriteAimodelButton from '../specialButton/FavoriteAimodelButton';
+import FavoriteAimodelButton from './FavoriteAimodelButton';
 
 export default class AimodelProfile extends Component {
     constructor(props) {
