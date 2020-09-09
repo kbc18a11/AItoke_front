@@ -35,6 +35,7 @@ export default class MyAimodelsList extends Component<Props, State> {
 		super(props);
 
 		this.setCurrentPage = this.setCurrentPage.bind(this);
+		this.deleteListItem = this.deleteListItem.bind(this);
 	}
 
 	/**
@@ -99,9 +100,12 @@ export default class MyAimodelsList extends Component<Props, State> {
 		}
 	}
 
-	deleteListItem(aimodel_id: number) {
-		console.log(aimodel_id);
-
+	/**
+	 *
+	 * @param aimodel_id
+	 * @returns {void}
+	 */
+	deleteListItem(aimodel_id: number): void {
 		//AIモデルの配列をコピー
 		const aimodelListData = this.state.aimodelListData.slice();
 
@@ -110,9 +114,11 @@ export default class MyAimodelsList extends Component<Props, State> {
 			//AIモデルのidを引数のidは一緒か？
 			if (aimodel.id === aimodel_id) {
 				//対象のAiモデルを削除
-				aimodelListData.slice(index, 1);
+				aimodelListData.splice(index, 1);
 			}
 		});
+
+		this.setState({ aimodelListData: aimodelListData });
 	}
 
 	componentDidMount() {
