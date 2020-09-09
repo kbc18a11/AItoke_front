@@ -30,6 +30,11 @@ export default class InputImage extends Component {
             return;
         }
 
+        if (nextProps.image) {
+            this.setState({ image: nextProps.image });
+            return;
+        }
+
         this.setState({ outPutErrotMeaagages: [] });
     }
 
@@ -39,18 +44,17 @@ export default class InputImage extends Component {
      */
     changePreview(e) {
         const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
-        
+
         //アップロードされた画像のURLを取得
         const imageURL = createObjectURL(e.target.files[0]);
         //プレビュー用の画像URLをセット
         this.setState({ image: imageURL });
-        
+
         //親に画像を送信する
         this.state.setValue(e.target.files);
     }
 
     render() {
-        
         return (
             <Form.Group>
                 <Form.Label>{this.state.label}</Form.Label>
