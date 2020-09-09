@@ -135,8 +135,9 @@ export default class CreateAiModel extends Component {
 
             //エラーステータスは401か？(未ログイン,トークンの期限切れ)
             if (error.response.status === 401) {
-                //エラーメッセージを格納
-                this.setState({ redirectTo: '/logout' });
+                //ログアウトの処理
+                actions.logout();
+                this.setState({ redirectTo: '/login' });
                 return false;
             }
         }
@@ -153,7 +154,7 @@ export default class CreateAiModel extends Component {
 
         //AIモデルは作れたか？
         if (await this.requestCreate()) {
-            this.setState({ redirectTo: `/userl/${userStore.userStatus.userId}/aimode` });
+            this.setState({ redirectTo: `/user/my/aimodel` });
             return;
         }
     }

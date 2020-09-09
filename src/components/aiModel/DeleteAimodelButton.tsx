@@ -32,13 +32,13 @@ export default class DeleteAimodelButton extends Component<Props, State> {
 			Authorization: `Bearer ${userStore.token}`,
 		};
 
-		try {
-			//通信開始
-			await (await axios.delete(`${_APIURL}/aimodel/${this.props.ai_model_id}`))
-				.data;
+		//通信開始
+		await (await axios.delete(`${_APIURL}/aimodel/${this.props.ai_model_id}`))
+			.data;
 
-			//親に削除を知らせる
-			this.props.clickParentEvent();
+		//親に削除を知らせる
+		this.props.clickParentEvent();
+		try {
 		} catch (error) {
 			console.log(error.response);
 
