@@ -45,7 +45,7 @@ export default class MyAimodelsListItem extends Component<Props> {
 						<Link className='linkCharacter' to={this.props.linkTo}>
 							<h3>{this.props.name}</h3>
 						</Link>
-						<Link to={'/register'}>
+						<Link to={`/aimodel/update/${this.props.id}`}>
 							<Button>編集</Button>
 						</Link>
 						&nbsp;
