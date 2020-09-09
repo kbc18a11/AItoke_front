@@ -10,6 +10,7 @@ export default class UserNavMenu extends Component {
             <NavDropdown title="" id="basic-nav-dropdown" >
                 <LinkContainer to='/userupdate'><NavDropdown.Item>ユーザー情報更新</NavDropdown.Item></LinkContainer>
                 <LinkContainer to='/favorite/aimode'><NavDropdown.Item>いいねしたAIモデル</NavDropdown.Item></LinkContainer>
+                <LinkContainer to='/user/my/aimodel'><NavDropdown.Item>自分の作ったAIモデル</NavDropdown.Item></LinkContainer>
                 <NavDropdown.Divider />
                 <LinkContainer to='/logout'><NavDropdown.Item>ログアウト</NavDropdown.Item></LinkContainer>
             </NavDropdown>
