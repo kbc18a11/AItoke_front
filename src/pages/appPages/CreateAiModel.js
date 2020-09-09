@@ -12,7 +12,6 @@ import ValidationManager from '../../modules/class/ValidationManager';
 import { actions } from '../../flux/user/userActions';
 import userStore from '../../flux/user/UserStore';
 import { Redirect } from "react-router-dom";
-import Logout from './Logout';
 
 export default class CreateAiModel extends Component {
     constructor(props) {

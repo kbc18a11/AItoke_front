@@ -7,6 +7,7 @@ import AimodelListItem from './AimodelListItem';
 import { _S3URL } from '../../apiURL/s3';
 import userStore from '../../flux/user/UserStore';
 import { actions } from '../../flux/user/userActions';
+import { _APIURL } from '../../apiURL/AITalk_outApiCall_and_Auth';
 
 export default class AimodelList extends Component {
     constructor(props) {

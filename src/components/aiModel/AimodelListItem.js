@@ -27,6 +27,11 @@ export default class AimodelListItem extends Component {
         if (nextProps.close_mouth_image) {
             this.setState({ close_mouth_image: nextProps.close_mouth_image });
         }
+
+        //リンク先の変更はあったか？
+        if (nextProps.linkTo) {
+            this.setState({ linkTo: nextProps.linkTo });
+        }
     }
 
     render() {
