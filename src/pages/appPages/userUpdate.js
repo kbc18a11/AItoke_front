@@ -102,12 +102,6 @@ export default class userUpdate extends Component {
         formData.append('name', this.state.name);
         formData.append('email', this.state.email);
 
-        //リクエストボディ
-        const requestBody = {
-            name: this.state.name,
-            email: this.state.email,
-        };
-
         //アップロードするアイコン画像は存在するか？
         if (this.state.iconFile) {
             formData.append('icon', this.state.iconFile);

@@ -25,8 +25,16 @@ export default class InputImage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.outPutErrotMeaagages) {
+
+        //新しいエラーメッセージの存在はしているか？
+        if (nextProps.outPutErrotMeaagages && nextProps.outPutErrotMeaagages.length) {
             this.setState({ outPutErrotMeaagages: nextProps.outPutErrotMeaagages });
+            return;
+        }
+
+
+        if (this.state.image === 'https://aitoke.s3-ap-northeast-1.amazonaws.com/' && nextProps.image) {
+            this.setState({ image: nextProps.image });
             return;
         }
 
@@ -39,18 +47,18 @@ export default class InputImage extends Component {
      */
     changePreview(e) {
         const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
-        
+
         //アップロードされた画像のURLを取得
         const imageURL = createObjectURL(e.target.files[0]);
         //プレビュー用の画像URLをセット
         this.setState({ image: imageURL });
-        
+
         //親に画像を送信する
         this.state.setValue(e.target.files);
     }
 
     render() {
-        
+
         return (
             <Form.Group>
                 <Form.Label>{this.state.label}</Form.Label>
