@@ -25,12 +25,15 @@ export default class InputImage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.outPutErrotMeaagages) {
+
+        //新しいエラーメッセージの存在はしているか？
+        if (nextProps.outPutErrotMeaagages && nextProps.outPutErrotMeaagages.length) {
             this.setState({ outPutErrotMeaagages: nextProps.outPutErrotMeaagages });
             return;
         }
 
-        if (nextProps.image) {
+
+        if (this.state.image === 'https://aitoke.s3-ap-northeast-1.amazonaws.com/' && nextProps.image) {
             this.setState({ image: nextProps.image });
             return;
         }
@@ -55,6 +58,7 @@ export default class InputImage extends Component {
     }
 
     render() {
+
         return (
             <Form.Group>
                 <Form.Label>{this.state.label}</Form.Label>
